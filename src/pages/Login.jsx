@@ -7,6 +7,7 @@ function Login() {
         Email
         <input
           type="text"
+          data-testid="email-input"
         />
       </label>
 
@@ -14,11 +15,13 @@ function Login() {
         Password
         <input
           type="password"
+          data-testid="password-input"
         />
       </label>
 
       <button
         type="button"
+        data-testid="login-submit-btn"
       >
         Entrar
       </button>
