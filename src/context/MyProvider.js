@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import MyContext from './MyContext';
+import context from './MyContext';
 
 function Provider({ children }) {
   const [login, setLogin] = useState('');
@@ -14,14 +14,14 @@ function Provider({ children }) {
   };
 
   return (
-    <MyContext.Provider value={ stateValues }>
+    <context.Provider value={ stateValues }>
       {children}
-    </MyContext.Provider>
+    </context.Provider>
   );
 }
 
 Provider.propTypes = {
-  children: PropTypes.objectOf(PropTypes.any).isRequired,
-};
+  children: PropTypes.node,
+}.isRequired;
 
 export default Provider;
