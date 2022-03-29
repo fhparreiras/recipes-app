@@ -30,7 +30,7 @@ function Header({ title, renderSearchBar }) {
     } else {
       const response = await fetch(url);
       const result = await response.json();
-      // console.log('api: ', result, 'url: ', url);
+      console.log('api: ', result, 'url: ', url);
       return result;
     }
   };
