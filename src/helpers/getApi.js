@@ -1,6 +1,28 @@
-export const getApi = async () => {
-  const response = await fetch('');
+export const getApiDrinks = async (wSearch, src) => {
+  const key = [];
+  if (wSearch === 'name') key.push('s');
+  if (wSearch === 'ingredient') {
+    key.push('i');
+    const response = await fetch(
+      `https://www.thecocktaildb.com/api/json/v1/1/filter.php?${key[0]}=${src}`,
+    );
+    const result = await response.json();
+    console.log(key, src);
+    console.log(result);
+    return result;
+  }
+  if (wSearch === 'first-letter') {
+    if (src.length > 1) {
+      return global.alert('Your search must have only 1 (one) character');
+    }
+    key.push('f');
+  }
+  const response = await fetch(
+    `https://www.thecocktaildb.com/api/json/v1/1/search.php?${key[0]}=${src}`,
+  );
   const result = await response.json();
+  console.log(key, src);
+  console.log(result);
   return result;
 };
 

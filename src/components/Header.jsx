@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-import { getFoodApi } from '../helpers/getApi';
+import { getFoodApi, getApiDrinks } from '../helpers/getApi';
 
 function Header({ title, renderSearchBar }) {
   const [disabledSearch, setDisabledSearch] = useState(true);
@@ -24,14 +24,19 @@ function Header({ title, renderSearchBar }) {
   };
 
   const handleSearchBtn = async () => {
-    const url = `${getFoodApi(searchType)}${searchBar}`;
-    if (searchType === 'first-letter' && searchBar.length > 1) {
-      global.alert('Your search must have only 1 (one) character');
-    } else {
-      const response = await fetch(url);
-      const result = await response.json();
-      console.log('api: ', result, 'url: ', url);
-      return result;
+    if (title === 'Foods') {
+      const url = `${getFoodApi(searchType)}${searchBar}`;
+      if (searchType === 'first-letter' && searchBar.length > 1) {
+        global.alert('Your search must have only 1 (one) character');
+      } else {
+        const response = await fetch(url);
+        const result = await response.json();
+        console.log('api: ', result, 'url: ', url);
+        return result;
+      }
+    }
+    if (title === 'Drinks') {
+      getApiDrinks(searchType, searchBar);
     }
   };
 
