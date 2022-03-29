@@ -119,12 +119,9 @@ function Header({ title, renderSearchBar }) {
   );
 }
 
-<<<<<<< Updated upstream
 Header.propTypes = {
   title: PropTypes.string.isRequired,
   renderSearchBar: PropTypes.bool.isRequired,
 };
 
-=======
->>>>>>> Stashed changes
 export default Header;
