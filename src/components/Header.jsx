@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
-function Header({ title }) {
+function Header({ title, renderSearchBar }) {
   return (
     <header>
       <Link to="/profile">
@@ -21,13 +21,14 @@ function Header({ title }) {
       >
         { title }
       </h1>
-
-      <input
-        type="image"
-        data-testid="search-top-btn"
-        src={ searchIcon }
-        alt="searchIcon"
-      />
+      { renderSearchBar && (
+        <input
+          type="image"
+          data-testid="search-top-btn"
+          src={ searchIcon }
+          alt="searchIcon"
+        />
+      )}
 
     </header>
   );
@@ -35,6 +36,7 @@ function Header({ title }) {
 
 Header.propTypes = {
   title: PropTypes.string.isRequired,
+  renderSearchBar: PropTypes.bool.isRequired,
 };
 
 export default Header;
