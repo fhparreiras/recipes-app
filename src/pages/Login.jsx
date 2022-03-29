@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function Login() {
+function Login({ history }) {
   return (
     <div>
       <label htmlFor="login">
@@ -22,11 +23,16 @@ function Login() {
       <button
         type="button"
         data-testid="login-submit-btn"
+        onClick={ () => history.push('/foods') }
       >
         Entrar
       </button>
     </div>
   );
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+};
 
 export default Login;
