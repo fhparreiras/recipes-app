@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 import context from '../context/MyContext';
 
-function Login() {
+function Login({ history }) {
   const {
     login,
     setLogin,
@@ -37,6 +38,7 @@ function Login() {
     localStorage.setItem('cocktailsToken', 1);
     const email = JSON.stringify({ email: login });
     localStorage.setItem('user', email);
+    history.push('/foods');
   };
 
   return (
@@ -70,5 +72,9 @@ function Login() {
     </div>
   );
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+};
 
 export default Login;
