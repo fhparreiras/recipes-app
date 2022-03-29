@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 function Header({ title, renderSearchBar }) {
+  const [disabledSearch, setDisabledSearch] = useState(true);
+
+  const handleClickSearch = () => {
+    if (disabledSearch === true) setDisabledSearch(false);
+    if (disabledSearch === false) setDisabledSearch(true);
+  };
+
   return (
     <header>
       <Link to="/profile">
@@ -27,9 +34,15 @@ function Header({ title, renderSearchBar }) {
           data-testid="search-top-btn"
           src={ searchIcon }
           alt="searchIcon"
+          onClick={ handleClickSearch }
         />
       )}
-
+      { disabledSearch !== true
+        && <input
+          type="text"
+          data-testid="search-input"
+          placeholder="Search Recipe"
+        />}
     </header>
   );
 }
@@ -40,25 +53,3 @@ Header.propTypes = {
 };
 
 export default Header;
-
-// import React, { useState } from 'react';
-
-// function Header() {
-//   const [disabledSearch, setDisabledSearch] = useState(true);
-
-//   const handleClickSearch = () => {
-//     setDisabledSearch(false);
-//   };
-//   return (
-//     <div>
-//       <button
-//         type="button"
-//         onClick={ handleClickSearch }
-//       >
-//         Busca
-//       </button>
-//       {!disabledSearch
-//       && <input type="text" data-testid="search-input" />}
-//     </div>
-//   );
-// }
