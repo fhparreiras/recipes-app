@@ -19,3 +19,10 @@
   margin-bottom: 15px;
   width: 100%;
 }
+
+.search-bar {
+  border-radius: 6px;
+  margin-left: 15px;
+  margin-right: 15px;
+  width: 100%;
+}

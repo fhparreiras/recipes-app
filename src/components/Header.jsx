@@ -42,33 +42,35 @@ function Header({ title, renderSearchBar }) {
   };
 
   return (
-    <header className="header">
-      <Link to="/profile">
-        <input
-          type="image"
-          data-testid="profile-top-btn"
-          src={ profileIcon }
-          alt="profileIcon"
-        />
-      </Link>
+    <header>
+      <div className="header">
+        <Link to="/profile">
+          <input
+            type="image"
+            data-testid="profile-top-btn"
+            src={ profileIcon }
+            alt="profileIcon"
+          />
+        </Link>
 
-      <h1
-        data-testid="page-title"
-      >
-        { title }
-      </h1>
-      { renderSearchBar && (
-        <input
-          type="image"
-          data-testid="search-top-btn"
-          src={ searchIcon }
-          alt="searchIcon"
-          onClick={ handleClickSearch }
-        />
-      )}
-      { disabledSearch !== true
+        <h1
+          data-testid="page-title"
+        >
+          {title}
+        </h1>
+        {renderSearchBar && (
+          <input
+            type="image"
+            data-testid="search-top-btn"
+            src={ searchIcon }
+            alt="searchIcon"
+            onClick={ handleClickSearch }
+          />
+        )}
+      </div>
+      {disabledSearch !== true
         && (
-          <>
+          <div className="search-bar">
             <input
               type="text"
               data-testid="search-input"
@@ -115,7 +117,7 @@ function Header({ title, renderSearchBar }) {
             >
               Search
             </button>
-          </>)}
+          </div>)}
     </header>
   );
 }
