@@ -4,7 +4,11 @@ import '../../css/card.css';
 
 function FoodCard({ index, imgSrc, recipeName }) {
   return (
-    <div className="recipe-card" data-testid={ `${index}-recipe-card` }>
+    <div
+      className="recipe-card"
+      data-testid={ `${index}-recipe-card` }
+      key={ `${index}` }
+    >
       <img src={ imgSrc } alt={ recipeName } data-testid={ `${index}-card-img` } />
       <span data-testid={ `${index}-card-name` }>{ recipeName }</span>
     </div>
