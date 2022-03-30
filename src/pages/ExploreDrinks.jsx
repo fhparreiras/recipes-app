@@ -1,9 +1,13 @@
 import React from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function ExploreDrinks() {
   return (
-    <Header title="Explore Drinks" renderSearchBar={ false } />
+    <div>
+      <Header title="Explore Drinks" renderSearchBar={ false } />
+      <Footer />
+    </div>
   );
 }
 
