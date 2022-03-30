@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import { getFoodApi, getApiDrinks } from '../helpers/getApi';
+import context from '../context/MyContext';
 
 function Header({ title, renderSearchBar }) {
   const [disabledSearch, setDisabledSearch] = useState(true);
   const [searchType, setSearchType] = useState('');
   const [searchBar, setSearchBar] = useState('');
+
+  const { setDrinksList, setRecipesList } = useContext(context);
 
   const handleClickSearch = () => {
     if (disabledSearch === true) setDisabledSearch(false);
@@ -31,12 +34,12 @@ function Header({ title, renderSearchBar }) {
       } else {
         const response = await fetch(url);
         const result = await response.json();
-        console.log('api: ', result, 'url: ', url);
-        return result;
+        console.log('api: ', result.meals, 'url: ', url);
+        return setRecipesList(result.meals);
       }
     }
     if (title === 'Drinks') {
-      getApiDrinks(searchType, searchBar);
+      getApiDrinks(searchType, searchBar, setDrinksList);
     }
   };
 
