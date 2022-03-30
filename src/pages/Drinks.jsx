@@ -10,23 +10,25 @@ function Drinks() {
   return (
     <>
       <Header title="Drinks" renderSearchBar />
-      { drinksList !== null && drinksList.map((drink, index) => {
-        const magicNumber = 11;
-        return (
-          index <= magicNumber
-            ? (
-              <DrinkCard
-                imgSrc={ drink.strDrinkThumb }
-                index={ index }
-                key={ index }
-                drinkName={ drink.strDrink }
-              />
-            )
-            : (
-              <span />
-            )
-        );
-      })}
+      <div className="recipe-container">
+        { drinksList !== null && drinksList.map((drink, index) => {
+          const magicNumber = 11;
+          return (
+            index <= magicNumber
+              ? (
+                <DrinkCard
+                  imgSrc={ drink.strDrinkThumb }
+                  index={ index }
+                  key={ index }
+                  drinkName={ drink.strDrink }
+                />
+              )
+              : (
+                <span />
+              )
+          );
+        })}
+      </div>
       <div>
         <Footer />
       </div>
