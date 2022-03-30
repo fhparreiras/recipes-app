@@ -1,4 +1,4 @@
-export const getApiDrinks = async (wSearch, src) => {
+export const getApiDrinks = async (wSearch, src, setDrinksList) => {
   const key = [];
   if (wSearch === 'name') key.push('s');
   if (wSearch === 'ingredient') {
@@ -23,7 +23,7 @@ export const getApiDrinks = async (wSearch, src) => {
   const result = await response.json();
   console.log(key, src);
   console.log(result);
-  return result;
+  return setDrinksList(result.drinks);
 };
 
 export const getFoodApi = (searchType) => {
