@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import { getFoodApi, getApiDrinks } from '../helpers/getApi';
+import '../css/footer.css';
 
 function Header({ title, renderSearchBar }) {
   const [disabledSearch, setDisabledSearch] = useState(true);
@@ -41,7 +42,7 @@ function Header({ title, renderSearchBar }) {
   };
 
   return (
-    <header>
+    <header className="header">
       <Link to="/profile">
         <input
           type="image"

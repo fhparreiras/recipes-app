@@ -1,5 +1,21 @@
 .footer {
   align-items: center;
+  background-color: rgb(238, 143, 88);
   bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  left: 0;
+  padding-top: 8px;
   position: fixed;
+  right: 0;
+}
+
+.header {
+  align-items: center;
+  background-color: rgb(238, 143, 88);
+  display: flex;
+  height: 55px;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  width: 100%;
 }
