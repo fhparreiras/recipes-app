@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import Header from '../components/Header';
 import FoodCard from '../components/cards/FoodCard';
 import context from '../context/MyContext';
+import Footer from '../components/Footer';
 
 function Foods() {
   const { recipesList } = useContext(context);
@@ -26,6 +27,9 @@ function Foods() {
             )
         );
       })}
+      <div>
+        <Footer />
+      </div>
     </>
   );
 }
