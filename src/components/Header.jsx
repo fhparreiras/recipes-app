@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import { getFoodApi, getApiDrinks } from '../helpers/getApi';
+import '../css/footer.css';
 
 function Header({ title, renderSearchBar }) {
   const [disabledSearch, setDisabledSearch] = useState(true);
@@ -42,32 +43,34 @@ function Header({ title, renderSearchBar }) {
 
   return (
     <header>
-      <Link to="/profile">
-        <input
-          type="image"
-          data-testid="profile-top-btn"
-          src={ profileIcon }
-          alt="profileIcon"
-        />
-      </Link>
+      <div className="header">
+        <Link to="/profile">
+          <input
+            type="image"
+            data-testid="profile-top-btn"
+            src={ profileIcon }
+            alt="profileIcon"
+          />
+        </Link>
 
-      <h1
-        data-testid="page-title"
-      >
-        { title }
-      </h1>
-      { renderSearchBar && (
-        <input
-          type="image"
-          data-testid="search-top-btn"
-          src={ searchIcon }
-          alt="searchIcon"
-          onClick={ handleClickSearch }
-        />
-      )}
-      { disabledSearch !== true
+        <h1
+          data-testid="page-title"
+        >
+          {title}
+        </h1>
+        {renderSearchBar && (
+          <input
+            type="image"
+            data-testid="search-top-btn"
+            src={ searchIcon }
+            alt="searchIcon"
+            onClick={ handleClickSearch }
+          />
+        )}
+      </div>
+      {disabledSearch !== true
         && (
-          <>
+          <div className="search-bar">
             <input
               type="text"
               data-testid="search-input"
@@ -114,7 +117,7 @@ function Header({ title, renderSearchBar }) {
             >
               Search
             </button>
-          </>)}
+          </div>)}
     </header>
   );
 }
