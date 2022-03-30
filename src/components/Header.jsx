@@ -30,11 +30,15 @@ function Header({ title, renderSearchBar }) {
   const handleSearchBtn = async () => {
     if (title === 'Foods') {
       const url = `${getFoodApi(searchType)}${searchBar}`;
+      // localStorage.setItem('foodUrl', JSON.stringify(url));
       if (searchType === 'first-letter' && searchBar.length > 1) {
         global.alert('Your search must have only 1 (one) character');
       } else {
         const response = await fetch(url);
         const result = await response.json();
+        if (result.meals === null) {
+          global.alert('Sorry, we haven\'t found any recipes for these filters.');
+        }
         console.log('api: ', result.meals, 'url: ', url);
         return setRecipesList(result.meals);
       }

@@ -4,7 +4,7 @@ import '../../css/card.css';
 
 function DrinkCard({ index, imgSrc, drinkName }) {
   return (
-    <div className="recipe-card" data-testid={ `${index}-recipe-card` }>
+    <div className="recipe-card" data-testid={ `${index}-recipe-card` } key={ index }>
       <img src={ imgSrc } alt={ drinkName } data-testid={ `${index}-card-img` } />
       <p data-testid={ `${index}-card-name` }>{ drinkName }</p>
     </div>

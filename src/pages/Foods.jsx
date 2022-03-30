@@ -1,11 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Header from '../components/Header';
 import FoodCard from '../components/cards/FoodCard';
 import context from '../context/MyContext';
 import Footer from '../components/Footer';
 
 function Foods() {
-  const { recipesList } = useContext(context);
+  const { recipesList, setRecipesList } = useContext(context);
+
+  useEffect(() => {
+    const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+    async function fetchList() {
+      const response = await fetch(url);
+      const result = await response.json();
+      return setRecipesList(result.meals);
+    }
+    fetchList();
+  }, [setRecipesList]);
 
   return (
     <>

@@ -1,7 +1,7 @@
 .recipe-container {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-around;
+  justify-content: space-evenly;
   margin: 40px auto 60px;
   width: 100vw;
 }

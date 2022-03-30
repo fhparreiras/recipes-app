@@ -1,11 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Header from '../components/Header';
 import DrinkCard from '../components/cards/DrinkCard';
 import context from '../context/MyContext';
 import Footer from '../components/Footer';
 
 function Drinks() {
-  const { drinksList } = useContext(context);
+  const { drinksList, setDrinksList } = useContext(context);
+
+  useEffect(() => {
+    const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+    async function fetchList() {
+      const response = await fetch(url);
+      const result = await response.json();
+      return setDrinksList(result.drinks);
+    }
+    fetchList();
+  }, [setDrinksList]);
 
   return (
     <>

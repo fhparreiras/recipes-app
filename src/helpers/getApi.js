@@ -21,6 +21,9 @@ export const getApiDrinks = async (wSearch, src, setDrinksList) => {
     `https://www.thecocktaildb.com/api/json/v1/1/search.php?${key[0]}=${src}`,
   );
   const result = await response.json();
+  if (result.drinks === null) {
+    global.alert('Sorry, we haven\'t found any recipes for these filters.');
+  }
   console.log(key, src);
   console.log(result);
   return setDrinksList(result.drinks);
