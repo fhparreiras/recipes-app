@@ -7,8 +7,8 @@ export const getApiDrinks = async (wSearch, src, setDrinksList) => {
       `https://www.thecocktaildb.com/api/json/v1/1/filter.php?${key[0]}=${src}`,
     );
     const result = await response.json();
-    console.log(key, src);
-    console.log(result);
+    // console.log(key, src);
+    // console.log(result);
     return result;
   }
   if (wSearch === 'first-letter') {
@@ -21,8 +21,8 @@ export const getApiDrinks = async (wSearch, src, setDrinksList) => {
     `https://www.thecocktaildb.com/api/json/v1/1/search.php?${key[0]}=${src}`,
   );
   const result = await response.json();
-  console.log(key, src);
-  console.log(result);
+  // console.log(key, src);
+  // console.log(result);
   return setDrinksList(result.drinks);
 };
 
@@ -44,4 +44,34 @@ export const getFoodApi = (searchType) => {
   }
   const url = `https://www.themealdb.com/api/json/v1/1/${queryA}.php?${queryB}=`;
   return url;
+};
+
+export const getRecipeApi = async (id) => {
+  const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+  const response = await fetch(url);
+  const { meals } = await response.json();
+
+  return meals;
+};
+
+export const getDrinkRecipeApi = async (id) => {
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+  const response = await fetch(url);
+  const { drinks } = await response.json();
+  return drinks;
+};
+
+export const getFoodRecommendationApi = async () => {
+  const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s='; // ${id}
+  const response = await fetch(url);
+  const { meals } = await response.json();
+  console.log(meals);
+  return meals;
+};
+
+export const getDrinkRecommendationApi = async () => {
+  const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s='; // ${id}
+  const response = await fetch(url);
+  const { drinks } = await response.json();
+  return drinks;
 };

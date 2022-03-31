@@ -35,7 +35,7 @@ function Header({ title, renderSearchBar }) {
       } else {
         const response = await fetch(url);
         const result = await response.json();
-        console.log('api: ', result.meals, 'url: ', url);
+        // console.log('api: ', result.meals, 'url: ', url);
         return setRecipesList(result.meals);
       }
     }

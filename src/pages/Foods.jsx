@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import FoodCard from '../components/cards/FoodCard';
 import context from '../context/MyContext';
@@ -15,12 +16,14 @@ function Foods() {
         return (
           index <= magicNumber
             ? (
-              <FoodCard
-                imgSrc={ recipe.strMealThumb }
-                index={ index }
-                key={ index }
-                recipeName={ recipe.strMeal }
-              />
+              <Link to={ `/foods/${recipe.idMeal}` }>
+                <FoodCard
+                  imgSrc={ recipe.strMealThumb }
+                  index={ index }
+                  key={ index }
+                  recipeName={ recipe.strMeal }
+                />
+              </Link>
             )
             : (
               <span />
