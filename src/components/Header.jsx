@@ -47,6 +47,7 @@ function Header({ history, title, renderSearchBar }) {
     }
   };
 
+  //
   const handleSearchBtn = async () => {
     if (title === 'Foods') {
       checkFoods();
