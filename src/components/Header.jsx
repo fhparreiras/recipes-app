@@ -39,7 +39,7 @@ function Header({ title, renderSearchBar }) {
         if (result.meals === null) {
           global.alert('Sorry, we haven\'t found any recipes for these filters.');
         }
-        console.log('api: ', result.meals, 'url: ', url);
+        // console.log('api: ', result.meals, 'url: ', url);
         return setRecipesList(result.meals);
       }
     }
