@@ -1,0 +1,19 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+function FoodCard({ index, imgSrc, recipeName }) {
+  return (
+    <div key={ index } className="recipe-card" data-testid={ `${index}-recipe-card` }>
+      <img src={ imgSrc } alt={ recipeName } data-testid={ `${index}-card-img` } />
+      <p data-testid={ `${index}-card-name` }>{ recipeName }</p>
+    </div>
+  );
+}
+
+FoodCard.propTypes = {
+  imgSrc: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+  recipeName: PropTypes.string.isRequired,
+};
+
+export default FoodCard;

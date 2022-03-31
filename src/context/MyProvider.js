@@ -5,8 +5,13 @@ import context from './MyContext';
 function Provider({ children }) {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
+
   const [returnApiDrinks, setReturnApiDrinks] = useState([]);
   const [returnApiMeals, setReturnApiMeals] = useState([]);
+
+  const [recipesList, setRecipesList] = useState([]);
+  const [drinksList, setDrinksList] = useState([]);
+
 
   const stateValues = {
     login,
@@ -17,6 +22,11 @@ function Provider({ children }) {
     returnApiDrinks,
     setReturnApiDrinks,
     setReturnApiMeals,
+    recipesList,
+    setRecipesList,
+    drinksList,
+    setDrinksList,
+
   };
 
   return (
@@ -27,7 +37,7 @@ function Provider({ children }) {
 }
 
 Provider.propTypes = {
-  children: PropTypes.node,
-}.isRequired;
+  children: PropTypes.node.isRequired,
+};
 
 export default Provider;

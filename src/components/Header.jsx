@@ -5,6 +5,7 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import { getFoodApi, getApiDrinks } from '../helpers/getApi';
 import context from '../context/MyContext';
+import '../css/footer.css';
 
 const Header = ({ title, renderSearchBar, history }) => {
   const {
@@ -14,6 +15,8 @@ const Header = ({ title, renderSearchBar, history }) => {
   const [disabledSearch, setDisabledSearch] = useState(true);
   const [searchType, setSearchType] = useState('');
   const [searchBar, setSearchBar] = useState('');
+
+  const { setDrinksList, setRecipesList } = useContext(context);
 
   const handleClickSearch = () => {
     if (disabledSearch === true) setDisabledSearch(false);
@@ -59,32 +62,34 @@ const Header = ({ title, renderSearchBar, history }) => {
 
   return (
     <header>
-      <Link to="/profile">
-        <input
-          type="image"
-          data-testid="profile-top-btn"
-          src={ profileIcon }
-          alt="profileIcon"
-        />
-      </Link>
+      <div className="header">
+        <Link to="/profile">
+          <input
+            type="image"
+            data-testid="profile-top-btn"
+            src={ profileIcon }
+            alt="profileIcon"
+          />
+        </Link>
 
-      <h1
-        data-testid="page-title"
-      >
-        { title }
-      </h1>
-      { renderSearchBar && (
-        <input
-          type="image"
-          data-testid="search-top-btn"
-          src={ searchIcon }
-          alt="searchIcon"
-          onClick={ handleClickSearch }
-        />
-      )}
-      { disabledSearch !== true
+        <h1
+          data-testid="page-title"
+        >
+          {title}
+        </h1>
+        {renderSearchBar && (
+          <input
+            type="image"
+            data-testid="search-top-btn"
+            src={ searchIcon }
+            alt="searchIcon"
+            onClick={ handleClickSearch }
+          />
+        )}
+      </div>
+      {disabledSearch !== true
         && (
-          <>
+          <div className="search-bar">
             <input
               type="text"
               data-testid="search-input"
@@ -131,7 +136,7 @@ const Header = ({ title, renderSearchBar, history }) => {
             >
               Search
             </button>
-          </>)}
+          </div>)}
     </header>
   );
 };
