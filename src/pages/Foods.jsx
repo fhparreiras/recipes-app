@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import FoodCard from '../components/cards/FoodCard';
 import context from '../context/MyContext';
 import Footer from '../components/Footer';
+import { getFoodByCategory } from '../helpers/getApi';
 
 function Foods() {
   const { recipesList, setRecipesList,
@@ -28,6 +29,13 @@ function Foods() {
     fetchCategories();
   }, [setFoodCategories]);
 
+  let filteredFoodList = foodCategories;
+
+  const handleFilterBtn = async ({ target }) => {
+    filteredFoodList = await getFoodByCategory(target.name);
+    setRecipesList(filteredFoodList);
+  };
+
   return (
     <>
       <Header title="Foods" renderSearchBar />
@@ -39,8 +47,10 @@ function Foods() {
               ? (
                 <button
                   data-testid={ `${category.strCategory}-category-filter` }
+                  name={ category.strCategory }
                   type="button"
                   key={ index }
+                  onClick={ handleFilterBtn }
                 >
                   { category.strCategory }
                 </button>

@@ -48,3 +48,17 @@ export const getFoodApi = (searchType) => {
   const url = `https://www.themealdb.com/api/json/v1/1/${queryA}.php?${queryB}=`;
   return url;
 };
+
+export const getFoodByCategory = async (category) => {
+  const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
+  const response = await fetch(url);
+  const result = await response.json();
+  return result.meals;
+};
+
+export const getDrinkByCategory = async (category) => {
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
+  const response = await fetch(url);
+  const result = await response.json();
+  return result.drinks;
+};
