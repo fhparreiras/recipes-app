@@ -1,15 +1,12 @@
+
 export const getApiDrinks = async (wSearch, src, setDrinksList) => {
   const key = [];
   if (wSearch === 'name') key.push('s');
   if (wSearch === 'ingredient') {
     key.push('i');
-    const response = await fetch(
-      `https://www.thecocktaildb.com/api/json/v1/1/filter.php?${key[0]}=${src}`,
-    );
-    const result = await response.json();
-    // console.log(key, src);
-    // console.log(result);
-    return result;
+    const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?${key[0]}=${src}`;
+    return url;
+
   }
   if (wSearch === 'first-letter') {
     if (src.length > 1) {
@@ -17,13 +14,18 @@ export const getApiDrinks = async (wSearch, src, setDrinksList) => {
     }
     key.push('f');
   }
-  const response = await fetch(
-    `https://www.thecocktaildb.com/api/json/v1/1/search.php?${key[0]}=${src}`,
-  );
-  const result = await response.json();
-  // console.log(key, src);
-  // console.log(result);
-  return setDrinksList(result.drinks);
+// <<<<<<< main-group-21-req16
+//   const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?${key[0]}=${src}`;
+//   return url;
+// =======
+//   const response = await fetch(
+//     `https://www.thecocktaildb.com/api/json/v1/1/search.php?${key[0]}=${src}`,
+//   );
+//   const result = await response.json();
+//   // console.log(key, src);
+//   // console.log(result);
+//   return setDrinksList(result.drinks);
+// >>>>>>> main-group-21
 };
 
 export const getFoodApi = (searchType) => {

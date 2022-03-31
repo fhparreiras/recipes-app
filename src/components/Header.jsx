@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
@@ -7,7 +7,11 @@ import { getFoodApi, getApiDrinks } from '../helpers/getApi';
 import context from '../context/MyContext';
 import '../css/footer.css';
 
-function Header({ title, renderSearchBar }) {
+const Header = ({ title, renderSearchBar, history }) => {
+  const {
+    setReturnApiDrinks,
+    setReturnApiMeals,
+  } = useContext(context);
   const [disabledSearch, setDisabledSearch] = useState(true);
   const [searchType, setSearchType] = useState('');
   const [searchBar, setSearchBar] = useState('');
@@ -34,13 +38,25 @@ function Header({ title, renderSearchBar }) {
         global.alert('Your search must have only 1 (one) character');
       } else {
         const response = await fetch(url);
-        const result = await response.json();
-        // console.log('api: ', result.meals, 'url: ', url);
-        return setRecipesList(result.meals);
+        const { meals } = await response.json();
+        setReturnApiMeals(meals);
+        if (meals.length === 1) {
+          history.push(`/foods/${meals[0].idMeal}`);
+          return meals;
+        }
+        return meals;
       }
     }
     if (title === 'Drinks') {
-      getApiDrinks(searchType, searchBar, setDrinksList);
+      const url = `${getApiDrinks(searchType, searchBar)}`;
+      const response = await fetch(url);
+      const { drinks } = await response.json();
+      setReturnApiDrinks(drinks);
+      if (drinks.length === 1) {
+        history.push(`/drinks/${drinks[0].idDrink}`);
+        return drinks;
+      }
+      return drinks;
     }
   };
 
@@ -123,11 +139,12 @@ function Header({ title, renderSearchBar }) {
           </div>)}
     </header>
   );
-}
+};
 
 Header.propTypes = {
-  title: PropTypes.string.isRequired,
-  renderSearchBar: PropTypes.bool.isRequired,
-};
+  title: PropTypes.string,
+  renderSearchBar: PropTypes.bool,
+  history: PropTypes.shape({ push: PropTypes.func }),
+}.isRequired;
 
 export default Header;

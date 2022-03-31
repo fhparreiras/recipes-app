@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import FoodCard from '../components/cards/FoodCard';
 import context from '../context/MyContext';
@@ -10,7 +11,7 @@ function Foods() {
 
   return (
     <>
-      <Header title="Foods" renderSearchBar />
+      <Header title="Foods" history={ history } renderSearchBar />
       { recipesList !== null && recipesList.map((recipe, index) => {
         const magicNumber = 11;
         return (
@@ -36,4 +37,7 @@ function Foods() {
     </>
   );
 }
+Foods.propTypes = {
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+};
 export default Foods;
