@@ -32,8 +32,17 @@ function Foods() {
   let filteredFoodList = foodCategories;
 
   const handleFilterBtn = async ({ target }) => {
-    filteredFoodList = await getFoodByCategory(target.name);
-    setRecipesList(filteredFoodList);
+    if (target.className === 'unset') {
+      target.className = 'set';
+      filteredFoodList = await getFoodByCategory(target.name);
+      setRecipesList(filteredFoodList);
+    } else {
+      target.className = 'unset';
+      const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+      const response = await fetch(url);
+      const result = await response.json();
+      return setRecipesList(result.meals);
+    }
   };
 
   return (
@@ -46,6 +55,7 @@ function Foods() {
             index <= magicNumber
               ? (
                 <button
+                  className="unset"
                   data-testid={ `${category.strCategory}-category-filter` }
                   name={ category.strCategory }
                   type="button"

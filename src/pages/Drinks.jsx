@@ -32,8 +32,17 @@ function Drinks() {
   let filteredDrinkList = drinkCategories;
 
   const handleFilterBtn = async ({ target }) => {
-    filteredDrinkList = await getDrinkByCategory(target.name);
-    setDrinksList(filteredDrinkList);
+    if (target.className === 'unset') {
+      target.className = 'set';
+      filteredDrinkList = await getDrinkByCategory(target.name);
+      setDrinksList(filteredDrinkList);
+    } else {
+      target.className = 'unset';
+      const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+      const response = await fetch(url);
+      const result = await response.json();
+      return setDrinksList(result.drinks);
+    }
   };
 
   return (
@@ -46,6 +55,7 @@ function Drinks() {
             index <= magicNumber
               ? (
                 <button
+                  className="unset"
                   data-testid={ `${category.strCategory}-category-filter` }
                   name={ category.strCategory }
                   onClick={ handleFilterBtn }
