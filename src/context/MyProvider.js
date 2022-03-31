@@ -5,28 +5,24 @@ import context from './MyContext';
 function Provider({ children }) {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-
-  const [returnApiDrinks, setReturnApiDrinks] = useState([]);
-  const [returnApiMeals, setReturnApiMeals] = useState([]);
-
   const [recipesList, setRecipesList] = useState([]);
   const [drinksList, setDrinksList] = useState([]);
-
+  const [foodCategories, setFoodCategories] = useState([]);
+  const [drinkCategories, setDrinkCategories] = useState([]);
 
   const stateValues = {
     login,
     setLogin,
     password,
     setPassword,
-    returnApiMeals,
-    returnApiDrinks,
-    setReturnApiDrinks,
-    setReturnApiMeals,
     recipesList,
     setRecipesList,
     drinksList,
     setDrinksList,
-
+    foodCategories,
+    setFoodCategories,
+    drinkCategories,
+    setDrinkCategories,
   };
 
   return (

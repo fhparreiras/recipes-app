@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
@@ -7,11 +7,7 @@ import { getFoodApi, getApiDrinks } from '../helpers/getApi';
 import context from '../context/MyContext';
 import '../css/footer.css';
 
-const Header = ({ title, renderSearchBar, history }) => {
-  const {
-    setReturnApiDrinks,
-    setReturnApiMeals,
-  } = useContext(context);
+function Header({ history, title, renderSearchBar }) {
   const [disabledSearch, setDisabledSearch] = useState(true);
   const [searchType, setSearchType] = useState('');
   const [searchBar, setSearchBar] = useState('');
@@ -31,27 +27,41 @@ const Header = ({ title, renderSearchBar, history }) => {
     setSearchType(target.value);
   };
 
+  const checkFoods = async () => {
+    const url = `${getFoodApi(searchType)}${searchBar}`;
+    if (searchType === 'first-letter' && searchBar.length > 1) {
+      return global.alert('Your search must have only 1 (one) character');
+    }
+    const response = await fetch(url);
+    const { meals } = await response.json();
+    setRecipesList(meals);
+    if (meals === null) {
+      return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
+    if (meals.length === 1) {
+      history.push(`/foods/${meals[0].idMeal}`);
+      return meals;
+    }
+    return meals;
+  };
+
+  //
   const handleSearchBtn = async () => {
     if (title === 'Foods') {
-      const url = `${getFoodApi(searchType)}${searchBar}`;
-      if (searchType === 'first-letter' && searchBar.length > 1) {
-        global.alert('Your search must have only 1 (one) character');
-      } else {
-        const response = await fetch(url);
-        const { meals } = await response.json();
-        setReturnApiMeals(meals);
-        if (meals.length === 1) {
-          history.push(`/foods/${meals[0].idMeal}`);
-          return meals;
-        }
-        return meals;
-      }
+      checkFoods();
     }
     if (title === 'Drinks') {
       const url = `${getApiDrinks(searchType, searchBar)}`;
+      if (searchType === 'first-letter' && searchBar.length > 1) {
+        return global.alert('Your search must have only 1 (one) character');
+      }
       const response = await fetch(url);
       const { drinks } = await response.json();
-      setReturnApiDrinks(drinks);
+      console.log(drinks);
+      setDrinksList(drinks);
+      if (drinks === null) {
+        return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      }
       if (drinks.length === 1) {
         history.push(`/drinks/${drinks[0].idDrink}`);
         return drinks;
@@ -139,7 +149,7 @@ const Header = ({ title, renderSearchBar, history }) => {
           </div>)}
     </header>
   );
-};
+}
 
 Header.propTypes = {
   title: PropTypes.string,
