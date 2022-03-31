@@ -1,11 +1,13 @@
 import React, { useContext, useEffect } from 'react';
-import Header from '../components/Header';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import FoodCard from '../components/cards/FoodCard';
 import context from '../context/MyContext';
 import Footer from '../components/Footer';
 import { getFoodByCategory } from '../helpers/getApi';
+import Header from '../components/Header';
 
-function Foods() {
+function Foods({ history }) {
   const { recipesList, setRecipesList,
     foodCategories, setFoodCategories } = useContext(context);
 
@@ -47,7 +49,7 @@ function Foods() {
 
   return (
     <>
-      <Header title="Foods" renderSearchBar />
+      <Header title="Foods" history={ history } renderSearchBar />
       <div className="categories-container">
         { foodCategories.map((category, index) => {
           const magicNumber = 4;
@@ -77,12 +79,14 @@ function Foods() {
           return (
             index <= magicNumber
               ? (
-                <FoodCard
-                  imgSrc={ recipe.strMealThumb }
-                  index={ index }
-                  key={ index }
-                  recipeName={ recipe.strMeal }
-                />
+                <Link to={ `/foods/${recipe.idMeal}` }>
+                  <FoodCard
+                    imgSrc={ recipe.strMealThumb }
+                    index={ index }
+                    key={ index }
+                    recipeName={ recipe.strMeal }
+                  />
+                </Link>
               )
               : (
                 <span />
@@ -96,4 +100,7 @@ function Foods() {
     </>
   );
 }
+Foods.propTypes = {
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+};
 export default Foods;

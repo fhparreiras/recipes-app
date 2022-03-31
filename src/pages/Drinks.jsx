@@ -1,11 +1,13 @@
 import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import DrinkCard from '../components/cards/DrinkCard';
 import context from '../context/MyContext';
 import Footer from '../components/Footer';
 import { getDrinkByCategory } from '../helpers/getApi';
 
-function Drinks() {
+function Drinks({ history }) {
   const { drinksList, setDrinksList,
     drinkCategories, setDrinkCategories } = useContext(context);
 
@@ -47,7 +49,7 @@ function Drinks() {
 
   return (
     <>
-      <Header title="Drinks" renderSearchBar />
+      <Header title="Drinks" history={ history } renderSearchBar />
       <div className="categories-container">
         { drinkCategories.map((category, index) => {
           const magicNumber = 4;
@@ -77,12 +79,14 @@ function Drinks() {
           return (
             index <= magicNumber
               ? (
-                <DrinkCard
-                  imgSrc={ drink.strDrinkThumb }
-                  index={ index }
-                  drinkName={ drink.strDrink }
-                  key={ drink.idDrink }
-                />
+                <Link to={ `/drinks/${drink.idDrink}` }>
+                  <DrinkCard
+                    imgSrc={ drink.strDrinkThumb }
+                    index={ index }
+                    key={ index }
+                    drinkName={ drink.strDrink }
+                  />
+                </Link>
               )
               : (
                 <span />
@@ -96,5 +100,9 @@ function Drinks() {
     </>
   );
 }
+
+Drinks.propTypes = {
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+};
 
 export default Drinks;

@@ -7,7 +7,7 @@ import { getFoodApi, getApiDrinks } from '../helpers/getApi';
 import context from '../context/MyContext';
 import '../css/footer.css';
 
-function Header({ title, renderSearchBar }) {
+function Header({ history, title, renderSearchBar }) {
   const [disabledSearch, setDisabledSearch] = useState(true);
   const [searchType, setSearchType] = useState('');
   const [searchBar, setSearchBar] = useState('');
@@ -27,24 +27,44 @@ function Header({ title, renderSearchBar }) {
     setSearchType(target.value);
   };
 
+  const checkFoods = async () => {
+    const url = `${getFoodApi(searchType)}${searchBar}`;
+    if (searchType === 'first-letter' && searchBar.length > 1) {
+      global.alert('Your search must have only 1 (one) character');
+    } else {
+      const response = await fetch(url);
+      const { meals } = await response.json();
+      setRecipesList(meals);
+      console.log('MEALS:', meals);
+      if (meals === null) {
+        return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      }
+      if (meals.length === 1) {
+        history.push(`/foods/${meals[0].idMeal}`);
+        return meals;
+      }
+      return meals;
+    }
+  };
+
   const handleSearchBtn = async () => {
     if (title === 'Foods') {
-      const url = `${getFoodApi(searchType)}${searchBar}`;
-      // localStorage.setItem('foodUrl', JSON.stringify(url));
-      if (searchType === 'first-letter' && searchBar.length > 1) {
-        global.alert('Your search must have only 1 (one) character');
-      } else {
-        const response = await fetch(url);
-        const result = await response.json();
-        if (result.meals === null) {
-          global.alert('Sorry, we haven\'t found any recipes for these filters.');
-        }
-        // console.log('api: ', result.meals, 'url: ', url);
-        return setRecipesList(result.meals);
-      }
+      checkFoods();
     }
     if (title === 'Drinks') {
-      getApiDrinks(searchType, searchBar, setDrinksList);
+      const url = `${getApiDrinks(searchType, searchBar)}`;
+      const response = await fetch(url);
+      const { drinks } = await response.json();
+      console.log(drinks);
+      setDrinksList(drinks);
+      if (drinks === null) {
+        return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      }
+      if (drinks.length === 1) {
+        history.push(`/drinks/${drinks[0].idDrink}`);
+        return drinks;
+      }
+      return drinks;
     }
   };
 
@@ -130,8 +150,9 @@ function Header({ title, renderSearchBar }) {
 }
 
 Header.propTypes = {
-  title: PropTypes.string.isRequired,
-  renderSearchBar: PropTypes.bool.isRequired,
-};
+  title: PropTypes.string,
+  renderSearchBar: PropTypes.bool,
+  history: PropTypes.shape({ push: PropTypes.func }),
+}.isRequired;
 
 export default Header;
