@@ -30,21 +30,19 @@ function Header({ history, title, renderSearchBar }) {
   const checkFoods = async () => {
     const url = `${getFoodApi(searchType)}${searchBar}`;
     if (searchType === 'first-letter' && searchBar.length > 1) {
-      global.alert('Your search must have only 1 (one) character');
-    } else {
-      const response = await fetch(url);
-      const { meals } = await response.json();
-      setRecipesList(meals);
-      console.log('MEALS:', meals);
-      if (meals === null) {
-        return global.alert('Sorry, we haven\'t found any recipes for these filters.');
-      }
-      if (meals.length === 1) {
-        history.push(`/foods/${meals[0].idMeal}`);
-        return meals;
-      }
+      return global.alert('Your search must have only 1 (one) character');
+    }
+    const response = await fetch(url);
+    const { meals } = await response.json();
+    setRecipesList(meals);
+    if (meals === null) {
+      return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
+    if (meals.length === 1) {
+      history.push(`/foods/${meals[0].idMeal}`);
       return meals;
     }
+    return meals;
   };
 
   //
@@ -54,6 +52,9 @@ function Header({ history, title, renderSearchBar }) {
     }
     if (title === 'Drinks') {
       const url = `${getApiDrinks(searchType, searchBar)}`;
+      if (searchType === 'first-letter' && searchBar.length > 1) {
+        return global.alert('Your search must have only 1 (one) character');
+      }
       const response = await fetch(url);
       const { drinks } = await response.json();
       console.log(drinks);
