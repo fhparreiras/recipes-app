@@ -100,7 +100,16 @@ function DetailsDrink({ location: { pathname } }) {
               </div>
             )))}
           <Link to={ `/drinks/${id}/in-progress` }>
-            <button type="button" data-testid="start-recipe-btn"> Start Recipe </button>
+            <button
+              style={ { position: 'fixed', bottom: '0px' } }
+              type="button"
+              data-testid="start-recipe-btn"
+            >
+              {' '}
+              Start Recipe
+              {' '}
+
+            </button>
           </Link>
         </div>)}
     </div>

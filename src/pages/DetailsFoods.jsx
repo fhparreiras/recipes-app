@@ -113,7 +113,16 @@ function DetailsFoods({ location: { pathname } }) {
                 <p>{each.strDrink}</p>
               </div>)))}
           <Link to={ `/foods/${id}/in-progress` }>
-            <button type="button" data-testid="start-recipe-btn"> Start Recipe </button>
+            <button
+              style={ { position: 'fixed', bottom: '0px' } }
+              type="button"
+              data-testid="start-recipe-btn"
+            >
+              {' '}
+              Start Recipe
+              {' '}
+
+            </button>
           </Link>
         </div>
       )}
