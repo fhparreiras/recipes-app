@@ -66,7 +66,6 @@ export const getFoodRecommendationApi = async () => {
   const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s='; // ${id}
   const response = await fetch(url);
   const { meals } = await response.json();
-  console.log(meals);
   return meals;
 };
 export const getDrinkRecommendationApi = async () => {
