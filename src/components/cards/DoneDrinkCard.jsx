@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+// import copy from 'clipboard-copy';
 import '../../css/card.css';
 import shareIcon from '../../images/shareIcon.svg';
 
 function DoneDrinkCard({ index, recipe }) {
+  const [linkCopied, setLinkCopied] = useState(false);
+
+  const clipboardCopy = () => {
+    setLinkCopied(!linkCopied);
+  };
+
   return (
     <div key={ index } className="done-recipe-card">
       <img
@@ -25,7 +32,9 @@ function DoneDrinkCard({ index, recipe }) {
         data-testid={ `${index}-horizontal-share-btn` }
         src={ shareIcon }
         alt="share-button-icon"
+        onClick={ clipboardCopy }
       />
+      {/* <span>{ linkCopied && 'Link copied!' }</span> */}
     </div>
   );
 }
