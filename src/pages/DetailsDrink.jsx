@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { getDrinkRecipeApi, getDrinkRecommendationApi } from '../helpers/getApi';
+import { getDrinkRecipeApi, getFoodRecommendationApi } from '../helpers/getApi';
 import shareIcon from '../images/shareIcon.svg';
 import likeIcon from '../images/whiteHeartIcon.svg';
 
@@ -9,7 +9,7 @@ function DetailsDrink({ location: { pathname } }) {
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
   const [chosenDrink, setDrink] = useState([]);
-  const [recommendedDrinks, setRecommended] = useState([]);
+  const [recommendedMeals, setRecommended] = useState([]);
 
   const cortar = 8;
   const arrayLength = 3;
@@ -30,7 +30,7 @@ function DetailsDrink({ location: { pathname } }) {
   };
 
   const getChosenDrink = async () => {
-    const recommended = await getDrinkRecommendationApi();
+    const recommended = await getFoodRecommendationApi();
     const sixRecommend = recommended.filter((_, index) => index < cortar - 2);
     setRecommended(sixRecommend);
 
@@ -91,12 +91,12 @@ function DetailsDrink({ location: { pathname } }) {
           </table>
           <p data-testid="instructions">{chosenDrink[0].strInstructions}</p>
 
-          {(!recommendedDrinks) ? (<p>Loading</p>
+          {(!recommendedMeals) ? (<p>Loading</p>
           ) : (
-            recommendedDrinks.map((each, index) => (
+            recommendedMeals.map((each, index) => (
               <div key={ index } data-testid={ `${index}-recomendation-card` }>
-                <img src={ each.strDrinkThumb } alt={ `${each.strDrink}` } />
-                <p>{each.strDrink}</p>
+                <img src={ each.strMealThumb } alt={ `${each.strMeal}` } />
+                <p>{each.strMeal}</p>
               </div>
             )))}
           <Link to={ `/drinks/${id}/in-progress` }>

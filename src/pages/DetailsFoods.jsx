@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { getFoodRecommendationApi, getRecipeApi } from '../helpers/getApi';
+import { getDrinkRecommendationApi, getRecipeApi } from '../helpers/getApi';
 import shareIcon from '../images/shareIcon.svg';
 import likeIcon from '../images/whiteHeartIcon.svg';
 
@@ -10,7 +10,7 @@ function DetailsFoods({ location: { pathname } }) {
   // const [chosenMealAsArray, setArray] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
-  const [recommendedMeals, setRecommended] = useState([]);
+  const [recommendedDrinks, setRecommended] = useState([]);
 
   const cortar = 7;
   const arrayLength = 3;
@@ -31,7 +31,7 @@ function DetailsFoods({ location: { pathname } }) {
   };
 
   const getChosenMeal = async () => {
-    const recommended = await getFoodRecommendationApi();
+    const recommended = await getDrinkRecommendationApi();
     const sixRecommend = recommended.filter((_, index) => index < cortar - 1);
     setRecommended(sixRecommend);
 
@@ -40,6 +40,7 @@ function DetailsFoods({ location: { pathname } }) {
 
     arrayIngredientsMeasures(data);
   };
+
   useEffect(() => {
     getChosenMeal();
   }, []);
@@ -104,12 +105,12 @@ function DetailsFoods({ location: { pathname } }) {
             />
           </video>
 
-          {(!recommendedMeals) ? (<p>Loading</p>
+          {(!recommendedDrinks) ? (<p>Loading</p>
           ) : (
-            recommendedMeals.map((each, index) => (
+            recommendedDrinks.map((each, index) => (
               <div key={ index } data-testid={ `${index}-recomendation-card` }>
-                <img src={ each.strMealThumb } alt={ `${each.strMeal}` } />
-                <p>{each.strMeal}</p>
+                <img src={ each.strDrinkThumb } alt={ `${each.strDrink}` } />
+                <p>{each.strDrink}</p>
               </div>)))}
           <Link to={ `/foods/${id}/in-progress` }>
             <button type="button" data-testid="start-recipe-btn"> Start Recipe </button>
