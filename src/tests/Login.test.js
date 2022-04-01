@@ -54,4 +54,23 @@ describe('Testes da TELA DE LOGIN', () => {
     userEvent.type(inputPassword, TYPED_PASSWORD);
     expect(loginBtn).not.toBeDisabled();
   });
+
+  test('Os tokens devem estar salvos no localStorage após logar', () => {
+    renderWithRouter(<App />);
+    const inputEmail = screen.getByTestId(EMAIL_INPUT);
+    const inputPassword = screen.getByTestId(PASSWORD_INPUT);
+    const loginBtn = screen.getByTestId(LOGIN_BTN);
+    const TYPED_EMAIL = 'emailTest@email.com';
+    const TYPED_PASSWORD = 'xablau12345467';
+
+    userEvent.type(inputEmail, TYPED_EMAIL);
+    userEvent.type(inputPassword, TYPED_PASSWORD);
+    userEvent.click(loginBtn);
+
+    const mealsToken = JSON.parse(localStorage.getItem('mealsToken'));
+    const cocktailsToken = JSON.parse(localStorage.getItem('cocktailsToken'));
+
+    expect(mealsToken).toBe(1);
+    expect(cocktailsToken).toBe(1);
+  });
 });
