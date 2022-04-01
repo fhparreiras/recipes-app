@@ -1,9 +1,8 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from '../renderWithRouter';
-import userEvent from '@testing-library/user-event';
 
 describe('Testes da TELA DE LOGIN', () => {
   test('Todos os inputs e button da tela devem estar presentes', () => {
@@ -20,9 +19,18 @@ describe('Testes da TELA DE LOGIN', () => {
   test('A pessoa deve conseguir escrever seu email no input de email', () => {
     renderWithRouter(<App />);
     const inputEmail = screen.getByTestId('email-input');
+    const TYPED_EMAIL = 'email@email.com';
+    userEvent.type(inputEmail, TYPED_EMAIL);
 
-    userEvent.type(inputEmail, 'email@email.com');
+    expect(inputEmail).toHaveValue(TYPED_EMAIL);
+  });
 
-    expect(inputEmail).toHaveValue('email@email.com');
+  test('A pessoa deve conseguir escrever sua senha no input de senha', () => {
+    renderWithRouter(<App />);
+    const inputPassword = screen.getByTestId('password-input');
+    const TYPED_PASSWORD = 'xablau1234567';
+    userEvent.type(inputPassword, TYPED_PASSWORD);
+
+    expect(inputPassword).toHaveValue(TYPED_PASSWORD);
   });
 });
