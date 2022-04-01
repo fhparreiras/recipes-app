@@ -55,7 +55,7 @@ describe('Testes da TELA DE LOGIN', () => {
     expect(loginBtn).not.toBeDisabled();
   });
 
-  test('Os tokens de receitas devem estar salvos no localStorage após logar', () => {
+  test('Ao logar, o localStorage deve ser povoado e a página redirecionada', () => {
     renderWithRouter(<App />);
     const inputEmail = screen.getByTestId(EMAIL_INPUT);
     const inputPassword = screen.getByTestId(PASSWORD_INPUT);
@@ -65,29 +65,17 @@ describe('Testes da TELA DE LOGIN', () => {
 
     userEvent.type(inputEmail, TYPED_EMAIL);
     userEvent.type(inputPassword, TYPED_PASSWORD);
+    expect(loginBtn).not.toBeDisabled();
     userEvent.click(loginBtn);
 
     const mealsToken = JSON.parse(localStorage.getItem('mealsToken'));
     const cocktailsToken = JSON.parse(localStorage.getItem('cocktailsToken'));
+    const userEmail = JSON.parse(localStorage.getItem('user')).email;
+    const titleText = screen.getByText('Foods');
 
+    expect(titleText).toBeInTheDocument();
     expect(mealsToken).toBe(1);
     expect(cocktailsToken).toBe(1);
-  });
-
-  test('O e-mail de usuário deve estar salvo no localStorage após logar', () => {
-    renderWithRouter(<App />);
-    // const inputEmail = screen.getByTestId(EMAIL_INPUT);
-    // const inputPassword = screen.getByTestId(PASSWORD_INPUT);
-    // const loginBtn = screen.getByTestId(LOGIN_BTN);
-    const TYPED_EMAIL = 'emailTest@email.com';
-    // const TYPED_PASSWORD = 'xablau12345467';
-
-    // userEvent.type(inputEmail, TYPED_EMAIL);
-    // userEvent.type(inputPassword, TYPED_PASSWORD);
-    // userEvent.click(loginBtn);
-
-    const userEmail = JSON.parse(localStorage.getItem('user')).email;
-
     expect(userEmail).toBe(TYPED_EMAIL);
   });
 });
