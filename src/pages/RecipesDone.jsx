@@ -19,7 +19,7 @@ function RecipesDone() {
         Drinks
       </button>
       <div className="done-recipes-container">
-        { doneRecipes.map((recipe, index) => (
+        { doneRecipes !== null && doneRecipes.map((recipe, index) => (
           recipe.type === 'food' ? (
             <DoneFoodCard index={ index } recipe={ recipe } />
           )
