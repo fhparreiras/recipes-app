@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 import '../../css/card.css';
 import shareIcon from '../../images/shareIcon.svg';
 
 function DoneFoodCard({ index, recipe }) {
+  const [foodLinkCopied, setFoodLinkCopied] = useState(false);
+
+  const clipboardCopy = ({ target }) => {
+    copy(`http://localhost:3000/foods/${target.id}`);
+    setFoodLinkCopied(!foodLinkCopied);
+  };
+
   return (
     <div key={ index } className="done-recipe-card">
       <img
@@ -25,8 +33,10 @@ function DoneFoodCard({ index, recipe }) {
       <input
         type="image"
         data-testid={ `${index}-horizontal-share-btn` }
+        id={ recipe.id }
         src={ shareIcon }
         alt="share-button-icon"
+        onClick={ clipboardCopy }
       />
       <span data-testid={ `${index}-${recipe.tags[0]}-horizontal-tag` }>
         { recipe.tags[0] }
@@ -34,6 +44,7 @@ function DoneFoodCard({ index, recipe }) {
       <span data-testid={ `${index}-${recipe.tags[1]}-horizontal-tag` }>
         { recipe.tags[1] }
       </span>
+      <span>{ foodLinkCopied && 'Link copied!' }</span>
     </div>
   );
 }
@@ -41,6 +52,9 @@ function DoneFoodCard({ index, recipe }) {
 DoneFoodCard.propTypes = {
   index: PropTypes.number.isRequired,
   recipe: PropTypes.objectOf(PropTypes.string).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default DoneFoodCard;
