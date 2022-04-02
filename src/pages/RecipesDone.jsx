@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import DoneFoodCard from '../components/cards/DoneFoodCard';
 import DoneDrinkCard from '../components/cards/DoneDrinkCard';
 
-function RecipesDone({ location }) {
+function RecipesDone({ history }) {
   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
 
   return (
@@ -25,10 +25,10 @@ function RecipesDone({ location }) {
       <div className="done-recipes-container">
         { doneRecipes !== null && doneRecipes.map((recipe, index) => (
           recipe.type === 'food' ? (
-            <DoneFoodCard location={ location } index={ index } recipe={ recipe } />
+            <DoneFoodCard history={ history } index={ index } recipe={ recipe } />
           )
             : (
-              <DoneDrinkCard location={ location } index={ index } recipe={ recipe } />
+              <DoneDrinkCard history={ history } index={ index } recipe={ recipe } />
             )
         ))}
       </div>
@@ -37,10 +37,7 @@ function RecipesDone({ location }) {
 }
 
 RecipesDone.propTypes = {
-  location: PropTypes.shape({
-    origin: PropTypes.string.isRequired,
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
 };
 
 export default RecipesDone;

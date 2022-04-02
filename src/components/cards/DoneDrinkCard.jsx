@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
 import '../../css/card.css';
@@ -14,17 +15,22 @@ function DoneDrinkCard({ index, recipe }) {
 
   return (
     <div key={ index } className="done-recipe-card">
-      <img
-        src={ recipe.image }
-        alt={ recipe.name }
-        data-testid={ `${index}-horizontal-image` }
-      />
+      <Link to={ `/drinks/${recipe.id}` }>
+        <img
+          className="details-recipe-img"
+          src={ recipe.image }
+          alt={ recipe.name }
+          data-testid={ `${index}-horizontal-image` }
+        />
+      </Link>
       <h4 data-testid={ `${index}-horizontal-top-text` }>
         { recipe.alcoholicOrNot }
       </h4>
-      <h5 data-testid={ `${index}-horizontal-name` }>
-        { recipe.name }
-      </h5>
+      <Link to={ `/drinks/${recipe.id}` }>
+        <h5 data-testid={ `${index}-horizontal-name` }>
+          { recipe.name }
+        </h5>
+      </Link>
       <h6 data-testid={ `${index}-horizontal-done-date` }>
         { recipe.doneDate }
       </h6>

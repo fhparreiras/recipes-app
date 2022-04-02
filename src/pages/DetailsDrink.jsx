@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { getDrinkRecipeApi, getFoodRecommendationApi } from '../helpers/getApi';
 import shareIcon from '../images/shareIcon.svg';
 import likeIcon from '../images/whiteHeartIcon.svg';
+import '../App.css';
 
 function DetailsDrink({ location: { pathname } }) {
   const [ingredients, setIngredients] = useState([]);
@@ -101,7 +102,8 @@ function DetailsDrink({ location: { pathname } }) {
             )))}
           <Link to={ `/drinks/${id}/in-progress` }>
             <button
-              style={ { position: 'fixed', bottom: '0px' } }
+              // style={ { position: 'fixed', bottom: '0' } }
+              className="start-recipe-btn"
               type="button"
               data-testid="start-recipe-btn"
             >
