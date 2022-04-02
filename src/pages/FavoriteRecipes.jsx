@@ -10,6 +10,12 @@ function FavoriteRecipes({ history }) {
 
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
+  const removeFavorite = ({ target }) => {
+    favoriteRecipes.splice(target.id, 1);
+    setRecipesList(favoriteRecipes);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+  };
+
   useEffect(() => {
     function setInitialList() {
       setRecipesList(favoriteRecipes);
@@ -59,10 +65,20 @@ function FavoriteRecipes({ history }) {
       <div className="favorite-recipes-container">
         { recipesList !== null && recipesList.map((recipe, index) => (
           recipe.type === 'food' ? (
-            <FavoriteFoodCard history={ history } index={ index } recipe={ recipe } />
+            <FavoriteFoodCard
+              history={ history }
+              index={ index }
+              recipe={ recipe }
+              onFavoriteClick={ removeFavorite }
+            />
           )
             : (
-              <FavoriteDrinkCard history={ history } index={ index } recipe={ recipe } />
+              <FavoriteDrinkCard
+                history={ history }
+                index={ index }
+                recipe={ recipe }
+                onFavoriteClick={ removeFavorite }
+              />
             )
         ))}
       </div>

@@ -6,7 +6,7 @@ import '../../css/card.css';
 import shareIcon from '../../images/shareIcon.svg';
 import favoriteIcon from '../../images/blackHeartIcon.svg';
 
-function FavoriteFoodCard({ index, recipe }) {
+function FavoriteFoodCard({ index, onFavoriteClick, recipe }) {
   const [drinkLinkCopied, setDrinkLinkCopied] = useState(false);
 
   const clipboardCopy = ({ target }) => {
@@ -45,9 +45,10 @@ function FavoriteFoodCard({ index, recipe }) {
       <input
         type="image"
         data-testid={ `${index}-horizontal-favorite-btn` }
-        id={ recipe.id }
+        id={ index }
         src={ favoriteIcon }
         alt="favorite-button-icon"
+        onClick={ onFavoriteClick }
       />
       <span>{ drinkLinkCopied && 'Link copied!' }</span>
     </div>
@@ -56,6 +57,7 @@ function FavoriteFoodCard({ index, recipe }) {
 
 FavoriteFoodCard.propTypes = {
   index: PropTypes.number.isRequired,
+  onFavoriteClick: PropTypes.func.isRequired,
   recipe: PropTypes.objectOf(PropTypes.string).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
