@@ -9,6 +9,7 @@ function Provider({ children }) {
   const [drinksList, setDrinksList] = useState([]);
   const [foodCategories, setFoodCategories] = useState([]);
   const [drinkCategories, setDrinkCategories] = useState([]);
+  const [f, setf] = useState({});
 
   const stateValues = {
     login,
@@ -23,6 +24,8 @@ function Provider({ children }) {
     setFoodCategories,
     drinkCategories,
     setDrinkCategories,
+    f,
+    setf,
   };
 
   return (
