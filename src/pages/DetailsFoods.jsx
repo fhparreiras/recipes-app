@@ -1,37 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { getFoodRecommendationApi, getRecipeApi } from '../helpers/getApi';
+import { getDrinkRecommendationApi, getRecipeApi } from '../helpers/getApi';
 import shareIcon from '../images/shareIcon.svg';
 import likeIcon from '../images/whiteHeartIcon.svg';
 
 function DetailsFoods({ location: { pathname } }) {
-  const [chosenMealAsArray, setArray] = useState([]);
   const [chosenMeal, setMeal] = useState([]);
-  const [recommendedMeals, setRecommended] = useState([]);
+  // const [chosenMealAsArray, setArray] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
+  const [measures, setMeasures] = useState([]);
+  const [recommendedDrinks, setRecommended] = useState([]);
 
   const cortar = 7;
+  const arrayLength = 3;
   const url = pathname.split('/');
   const id = url[2];
 
+  const arrayIngredientsMeasures = (data) => {
+    const mealAsArray = Object.entries(data[0]);
+
+    const ingred = mealAsArray.filter((each) => (each[0].includes('Ingredient')))
+      .filter((each) => each[1] !== null && each[1].length > 2);
+    setIngredients(ingred);
+    console.log(ingredients);
+
+    setMeasures(mealAsArray.filter((each) => (each[0].includes('Measure')))
+      .filter((each) => each[1] !== null && each[1].length > arrayLength));
+    console.log(measures);
+  };
+
   const getChosenMeal = async () => {
-    const recommended = await getFoodRecommendationApi();
-    // console.log('dentro de getChosenMeal: ', recommended);
+    const recommended = await getDrinkRecommendationApi();
     const sixRecommend = recommended.filter((_, index) => index < cortar - 1);
     setRecommended(sixRecommend);
 
     const data = await getRecipeApi(id);
     setMeal(data);
 
-    const mealAsArray = Object.entries(data[0]);
-    setArray(mealAsArray);
+    arrayIngredientsMeasures(data);
   };
 
   useEffect(() => {
     getChosenMeal();
   }, []);
 
-  // const { meals } = recommendedMeals;
   return (
     <div>
       { (!chosenMeal[0]) ? (<p>Loading</p>
@@ -56,21 +69,28 @@ function DetailsFoods({ location: { pathname } }) {
             alt="like-button-icon"
           />
           <p data-testid="recipe-category">{chosenMeal[0].strCategory}</p>
-          { chosenMealAsArray
-            .filter((each) => (each[0].includes('Ingredient')
-            /* && each[0].includes('Measure') */))
-            .filter((each) => each[1] !== null)
-            .map((each, index) => (
-              (each[1].length > 1
-              ) && (
-                <ul key={ index }>
-                  <li
-                    data-testid={ `${index}-ingredient-name-and-measure` }
-                  >
-                    {each[1]}
-                  </li>
-                </ul>)
-            ))}
+          <table>
+            <tr>
+              { ingredients.map((each, index) => (
+                <th
+                  key={ index }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {each[1]}
+                </th>))}
+            </tr>
+            <tr>
+              { measures.map((each, index) => (
+                <td
+                  key={ index }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {each[1]}
+                </td>
+              ))}
+            </tr>
+          </table>
+
           <p data-testid="instructions">{chosenMeal[0].strInstructions}</p>
           <video
             controls
@@ -85,15 +105,24 @@ function DetailsFoods({ location: { pathname } }) {
             />
           </video>
 
-          {(!recommendedMeals) ? (<p>Loading</p>
+          {(!recommendedDrinks) ? (<p>Loading</p>
           ) : (
-            recommendedMeals.map((each, index) => (
+            recommendedDrinks.map((each, index) => (
               <div key={ index } data-testid={ `${index}-recomendation-card` }>
-                <img src={ each.strMealThumb } alt={ `${each.strMeal}` } />
-                <p>{each.strMeal}</p>
+                <img src={ each.strDrinkThumb } alt={ `${each.strDrink}` } />
+                <p>{each.strDrink}</p>
               </div>)))}
           <Link to={ `/foods/${id}/in-progress` }>
-            <button type="button" data-testid="start-recipe-btn"> Start Recipe </button>
+            <button
+              style={ { position: 'fixed', bottom: '0px' } }
+              type="button"
+              data-testid="start-recipe-btn"
+            >
+              {' '}
+              Start Recipe
+              {' '}
+
+            </button>
           </Link>
         </div>
       )}
