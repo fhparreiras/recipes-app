@@ -34,7 +34,7 @@ function Foods({ history }) {
   let filteredFoodList = foodCategories;
 
   const handleFilterBtn = async ({ target }) => {
-    if (target.className === 'unset') {
+    if (target.className === 'unset' && target.name !== 'all') {
       target.className = 'set';
       filteredFoodList = await getFoodByCategory(target.name);
       setRecipesList(filteredFoodList);
@@ -51,6 +51,15 @@ function Foods({ history }) {
     <>
       <Header title="Foods" history={ history } renderSearchBar />
       <div className="categories-container">
+        <button
+          className="unset"
+          data-testid="All-category-filter"
+          name="all"
+          onClick={ handleFilterBtn }
+          type="button"
+        >
+          All
+        </button>
         { foodCategories.map((category, index) => {
           const magicNumber = 4;
           return (

@@ -34,7 +34,7 @@ function Drinks({ history }) {
   let filteredDrinkList = drinkCategories;
 
   const handleFilterBtn = async ({ target }) => {
-    if (target.className === 'unset') {
+    if (target.className === 'unset' && target.name !== 'all') {
       target.className = 'set';
       filteredDrinkList = await getDrinkByCategory(target.name);
       setDrinksList(filteredDrinkList);
@@ -51,6 +51,15 @@ function Drinks({ history }) {
     <>
       <Header title="Drinks" history={ history } renderSearchBar />
       <div className="categories-container">
+        <button
+          className="unset"
+          data-testid="All-category-filter"
+          name="all"
+          onClick={ handleFilterBtn }
+          type="button"
+        >
+          All
+        </button>
         { drinkCategories.map((category, index) => {
           const magicNumber = 4;
           return (
