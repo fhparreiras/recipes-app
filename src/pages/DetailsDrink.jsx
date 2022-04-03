@@ -41,6 +41,11 @@ function DetailsDrink({ location: { pathname } }) {
     arrayIngredientsMeasures(data);
   };
 
+  const myStyle = {
+    position: 'fixed',
+    bottom: '0',
+  };
+
   useEffect(() => {
     getChosenDrink();
   }, []);
@@ -102,7 +107,7 @@ function DetailsDrink({ location: { pathname } }) {
             )))}
           <Link to={ `/drinks/${id}/in-progress` }>
             <button
-              // style={ { position: 'fixed', bottom: '0' } }
+              style={ myStyle }
               className="start-recipe-btn"
               type="button"
               data-testid="start-recipe-btn"

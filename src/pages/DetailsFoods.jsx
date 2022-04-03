@@ -42,6 +42,11 @@ function DetailsFoods({ location: { pathname } }) {
     arrayIngredientsMeasures(data);
   };
 
+  const myStyle = {
+    position: 'fixed',
+    bottom: '0',
+  };
+
   useEffect(() => {
     getChosenMeal();
   }, []);
@@ -115,8 +120,7 @@ function DetailsFoods({ location: { pathname } }) {
               </div>)))}
           <Link to={ `/foods/${id}/in-progress` }>
             <button
-              className="start-recipe-btn"
-              // style={ { position: 'fixed', bottom: '0px' } }
+              style={ myStyle }
               type="button"
               data-testid="start-recipe-btn"
             >
