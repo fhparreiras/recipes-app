@@ -9,6 +9,7 @@ function FavoriteRecipes({ history }) {
   const { recipesList, setRecipesList } = useContext(context);
 
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  setRecipesList(favoriteRecipes);
 
   const removeFavorite = ({ target }) => {
     favoriteRecipes.splice(target.id, 1);
@@ -16,10 +17,17 @@ function FavoriteRecipes({ history }) {
     localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
   };
 
+  // useEffect(() => {
+  //   const setInitialList = () => {
+  //     setRecipesList(favoriteRecipes);
+  //   };
+  //   setInitialList();
+  // }, []);
+
   useEffect(() => {
-    function setInitialList() {
+    const setInitialList = () => {
       setRecipesList(favoriteRecipes);
-    }
+    };
     setInitialList();
   }, []);
 
