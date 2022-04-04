@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { getDrinkRecommendationApi, getRecipeApi } from '../helpers/getApi';
 import shareIcon from '../images/shareIcon.svg';
 import likeIcon from '../images/whiteHeartIcon.svg';
+import '../App.css';
 
 function DetailsFoods({ location: { pathname } }) {
   const [chosenMeal, setMeal] = useState([]);
@@ -39,6 +40,11 @@ function DetailsFoods({ location: { pathname } }) {
     setMeal(data);
 
     arrayIngredientsMeasures(data);
+  };
+
+  const myStyle = {
+    position: 'fixed',
+    bottom: '0',
   };
 
   useEffect(() => {
@@ -114,14 +120,13 @@ function DetailsFoods({ location: { pathname } }) {
               </div>)))}
           <Link to={ `/foods/${id}/in-progress` }>
             <button
-              style={ { position: 'fixed', bottom: '0px' } }
+              style={ myStyle }
               type="button"
               data-testid="start-recipe-btn"
             >
               {' '}
               Start Recipe
               {' '}
-
             </button>
           </Link>
         </div>

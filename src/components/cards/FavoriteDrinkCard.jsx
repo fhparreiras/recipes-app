@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
 import '../../css/card.css';
 import shareIcon from '../../images/shareIcon.svg';
+import favoriteIcon from '../../images/blackHeartIcon.svg';
 
-function DoneDrinkCard({ index, recipe }) {
+function FavoriteDrinkCard({ index, onFavoriteClick, recipe }) {
   const [drinkLinkCopied, setDrinkLinkCopied] = useState(false);
 
   const clipboardCopy = ({ target }) => {
@@ -14,7 +15,7 @@ function DoneDrinkCard({ index, recipe }) {
   };
 
   return (
-    <div key={ index } className="done-recipe-card">
+    <div key={ index } className="favorite-recipe-card">
       <Link to={ `/drinks/${recipe.id}` }>
         <img
           className="details-recipe-img"
@@ -31,9 +32,6 @@ function DoneDrinkCard({ index, recipe }) {
           { recipe.name }
         </h5>
       </Link>
-      <h6 data-testid={ `${index}-horizontal-done-date` }>
-        { recipe.doneDate }
-      </h6>
       <input
         type="image"
         data-testid={ `${index}-horizontal-share-btn` }
@@ -42,17 +40,26 @@ function DoneDrinkCard({ index, recipe }) {
         alt="share-button-icon"
         onClick={ clipboardCopy }
       />
+      <input
+        type="image"
+        data-testid={ `${index}-horizontal-favorite-btn` }
+        id={ index }
+        src={ favoriteIcon }
+        alt="favorite-button-icon"
+        onClick={ onFavoriteClick }
+      />
       <span>{ drinkLinkCopied && 'Link copied!' }</span>
     </div>
   );
 }
 
-DoneDrinkCard.propTypes = {
+FavoriteDrinkCard.propTypes = {
   index: PropTypes.number.isRequired,
+  onFavoriteClick: PropTypes.func.isRequired,
   recipe: PropTypes.objectOf(PropTypes.string).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
 };
 
-export default DoneDrinkCard;
+export default FavoriteDrinkCard;
