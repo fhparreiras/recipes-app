@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getDrinkRecommendationApi, getRecipeApi } from '../helpers/getApi';
 import shareIcon from '../images/shareIcon.svg';
-import likeIcon from '../images/whiteHeartIcon.svg';
+import likedIcon from '../images/whiteHeartIcon.svg';
+import dislikedIcon from '../images/blackHeartIcon.svg';
 
 function DetailsFoods({ location: { pathname } }) {
   const [chosenMeal, setMeal] = useState([]);
@@ -12,6 +13,16 @@ function DetailsFoods({ location: { pathname } }) {
   const [measures, setMeasures] = useState([]);
   const [recommendedDrinks, setRecommended] = useState([]);
   const [copiedLinkAlert, setCopiedLinkAlert] = useState(false);
+  const [favorited, setFavorited] = useState(false);
+  const [favoritedMealInfo, setFavoritedMealInfo] = useState({
+    id: '',
+    type: '',
+    nationality: '',
+    category: '',
+    alcoholicOrNot: false,
+    name: '',
+    image: '',
+  });
   const cortar = 7;
   const arrayMaxLength = 3;
   const url = pathname.split('/');
@@ -40,6 +51,7 @@ function DetailsFoods({ location: { pathname } }) {
   };
 
   useEffect(() => {
+    console.log('didMount: ', favorited);
     getChosenMeal();
   }, []);
 
@@ -53,6 +65,31 @@ function DetailsFoods({ location: { pathname } }) {
     setCopiedLinkAlert(true);
     document.body.removeChild(invisibleElement);
   };
+
+  const favoriteClick = () => {
+    // if (favorited) {
+    //   setFavorited(false);
+    //   // deletar do LocalStorage
+    // } else {
+    setFavorited(true);
+    // adicionar ao LocalStorage
+    console.log('add localStorage: ', favorited);
+    setFavoritedMealInfo({
+      id: chosenMeal[0].idMeal,
+      type: '',
+      nationality: chosenMeal[0].strArea,
+      category: chosenMeal[0].strCategory,
+      alcoholicOrNot: false,
+      name: chosenMeal[0].strMeal,
+      image: chosenMeal[0].strMealThumb,
+    });
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoritedMealInfo));
+    // }
+  };
+
+  // const checkIfFavorited = () => {
+
+  // };
 
   return (
     <div>
@@ -75,12 +112,12 @@ function DetailsFoods({ location: { pathname } }) {
               onClick={ copyURLClipboard }
             />
           ) }
-
           <input
             type="image"
             data-testid="favorite-btn"
-            src={ likeIcon }
+            src={ favorited ? dislikedIcon : likedIcon }
             alt="like-button-icon"
+            onClick={ favoriteClick }
           />
           <p data-testid="recipe-category">{chosenMeal[0].strCategory}</p>
           <table>
