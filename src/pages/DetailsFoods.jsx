@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { require } from 'clipboard-copy';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getDrinkRecommendationApi, getRecipeApi } from '../helpers/getApi';
@@ -7,13 +8,12 @@ import likeIcon from '../images/whiteHeartIcon.svg';
 
 function DetailsFoods({ location: { pathname } }) {
   const [chosenMeal, setMeal] = useState([]);
-  // const [chosenMealAsArray, setArray] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
   const [recommendedDrinks, setRecommended] = useState([]);
-
+  const [copiedLinkAlert, setCopiedLinkAlert] = useState(false);
   const cortar = 7;
-  const arrayLength = 3;
+  const arrayMaxLength = 3;
   const url = pathname.split('/');
   const id = url[2];
 
@@ -23,11 +23,9 @@ function DetailsFoods({ location: { pathname } }) {
     const ingred = mealAsArray.filter((each) => (each[0].includes('Ingredient')))
       .filter((each) => each[1] !== null && each[1].length > 2);
     setIngredients(ingred);
-    console.log(ingredients);
 
     setMeasures(mealAsArray.filter((each) => (each[0].includes('Measure')))
-      .filter((each) => each[1] !== null && each[1].length > arrayLength));
-    console.log(measures);
+      .filter((each) => each[1] !== null && each[1].length > arrayMaxLength));
   };
 
   const getChosenMeal = async () => {
@@ -45,6 +43,17 @@ function DetailsFoods({ location: { pathname } }) {
     getChosenMeal();
   }, []);
 
+  const copyURLClipboard = () => {
+    const invisibleElement = document.createElement('input');
+    invisibleElement.value = window.location.href;
+    document.body.appendChild(invisibleElement);
+    invisibleElement.select();
+    const copy = require('clipboard-copy');
+    copy(invisibleElement.value);
+    setCopiedLinkAlert(true);
+    document.body.removeChild(invisibleElement);
+  };
+
   return (
     <div>
       { (!chosenMeal[0]) ? (<p>Loading</p>
@@ -56,12 +65,17 @@ function DetailsFoods({ location: { pathname } }) {
             data-testid="recipe-photo"
           />
           <title data-testid="recipe-title">{chosenMeal[0].strMeal}</title>
-          <input
-            type="image"
-            data-testid="share-btn"
-            src={ shareIcon }
-            alt="share-button-icon"
-          />
+          { copiedLinkAlert ? (<div>Link copied!</div>
+          ) : (
+            <input
+              type="image"
+              data-testid="share-btn"
+              src={ shareIcon }
+              alt="share-button-icon"
+              onClick={ copyURLClipboard }
+            />
+          ) }
+
           <input
             type="image"
             data-testid="favorite-btn"

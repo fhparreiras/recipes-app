@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { require } from 'clipboard-copy';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getDrinkRecipeApi, getFoodRecommendationApi } from '../helpers/getApi';
@@ -10,7 +11,7 @@ function DetailsDrink({ location: { pathname } }) {
   const [measures, setMeasures] = useState([]);
   const [chosenDrink, setDrink] = useState([]);
   const [recommendedMeals, setRecommended] = useState([]);
-
+  const [copiedLinkAlert, setCopiedLinkAlert] = useState(false);
   const cortar = 8;
   const arrayLength = 3;
   const url = pathname.split('/');
@@ -44,6 +45,17 @@ function DetailsDrink({ location: { pathname } }) {
     getChosenDrink();
   }, []);
 
+  const copyURLClipboard = () => {
+    const invisibleElement = document.createElement('input');
+    invisibleElement.value = window.location.href;
+    document.body.appendChild(invisibleElement);
+    invisibleElement.select();
+    const copy = require('clipboard-copy');
+    copy(invisibleElement.value);
+    setCopiedLinkAlert(true);
+    document.body.removeChild(invisibleElement);
+  };
+
   return (
     <div>
       { (!chosenDrink[0]) ? (<p>Loading</p>
@@ -55,12 +67,16 @@ function DetailsDrink({ location: { pathname } }) {
             data-testid="recipe-photo"
           />
           <title data-testid="recipe-title">{chosenDrink[0].strDrink}</title>
-          <input
-            type="image"
-            data-testid="share-btn"
-            src={ shareIcon }
-            alt="share-button-icon"
-          />
+          { copiedLinkAlert ? (<div>Link copied!</div>
+          ) : (
+            <input
+              type="image"
+              data-testid="share-btn"
+              src={ shareIcon }
+              alt="share-button-icon"
+              onClick={ copyURLClipboard }
+            />
+          ) }
           <input
             type="image"
             data-testid="favorite-btn"
