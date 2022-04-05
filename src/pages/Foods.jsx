@@ -35,6 +35,8 @@ function Foods({ history }) {
 
   const handleFilterBtn = async ({ target }) => {
     if (target.className === 'unset' && target.name !== 'all') {
+      const getAllByClassSet = document.querySelectorAll('.set');
+      getAllByClassSet.forEach((el) => { el.className = 'unset'; });
       target.className = 'set';
       filteredFoodList = await getFoodByCategory(target.name);
       setFoodRecipesList(filteredFoodList);

@@ -7,6 +7,8 @@ import shareIcon from '../images/shareIcon.svg';
 import likedIcon from '../images/whiteHeartIcon.svg';
 import dislikedIcon from '../images/blackHeartIcon.svg';
 import checkIfFavorited from '../extra-functions/extraFunctions';
+import '../App.css';
+
 
 function DetailsFoods({ location: { pathname } }) {
   const [chosenMeal, setMeal] = useState([]);
@@ -43,6 +45,11 @@ function DetailsFoods({ location: { pathname } }) {
     setMeal(data);
 
     arrayIngredientsMeasures(data);
+  };
+
+  const myStyle = {
+    position: 'fixed',
+    bottom: '0',
   };
 
   useEffect(() => {
@@ -159,14 +166,13 @@ function DetailsFoods({ location: { pathname } }) {
               </div>)))}
           <Link to={ `/foods/${id}/in-progress` }>
             <button
-              style={ { position: 'fixed', bottom: '0px' } }
+              style={ myStyle }
               type="button"
               data-testid="start-recipe-btn"
             >
               {' '}
               Start Recipe
               {' '}
-
             </button>
           </Link>
         </div>
