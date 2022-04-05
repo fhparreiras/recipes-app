@@ -30,7 +30,14 @@ function ExploreFoodsNationalities() {
   }, [setRecipesList]);
 
   const selectNationality = async ({ target }) => {
-    const url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${target.value}`;
+    let url = '';
+    console.log(target.value);
+    if (target.value !== 'All') {
+      url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${target.value}`;
+    } else {
+      url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+    }
+    console.log(url);
     const response = await fetch(url);
     const result = await response.json();
     setRecipesList(result.meals);
@@ -44,6 +51,9 @@ function ExploreFoodsNationalities() {
         className="nationalities-container"
         onChange={ selectNationality }
       >
+        <option data-testid="All-option" value="All">
+          All
+        </option>
         { countriesList.map((country, index) => (
           <option
             key={ index }
