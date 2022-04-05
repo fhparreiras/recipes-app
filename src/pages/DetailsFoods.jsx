@@ -6,6 +6,7 @@ import { getDrinkRecommendationApi, getRecipeApi } from '../helpers/getApi';
 import shareIcon from '../images/shareIcon.svg';
 import likedIcon from '../images/whiteHeartIcon.svg';
 import dislikedIcon from '../images/blackHeartIcon.svg';
+import checkIfFavorited from '../extra-functions/extraFunctions';
 
 function DetailsFoods({ location: { pathname } }) {
   const [chosenMeal, setMeal] = useState([]);
@@ -14,19 +15,13 @@ function DetailsFoods({ location: { pathname } }) {
   const [recommendedDrinks, setRecommended] = useState([]);
   const [copiedLinkAlert, setCopiedLinkAlert] = useState(false);
   const [favorited, setFavorited] = useState(false);
-  const [favoritedMealInfo, setFavoritedMealInfo] = useState({
-    id: '',
-    type: '',
-    nationality: '',
-    category: '',
-    alcoholicOrNot: false,
-    name: '',
-    image: '',
-  });
+
   const cortar = 7;
   const arrayMaxLength = 3;
   const url = pathname.split('/');
   const id = url[2];
+
+  const pastFavoritedMeal = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
   const arrayIngredientsMeasures = (data) => {
     const mealAsArray = Object.entries(data[0]);
@@ -51,8 +46,9 @@ function DetailsFoods({ location: { pathname } }) {
   };
 
   useEffect(() => {
-    console.log('didMount: ', favorited);
     getChosenMeal();
+    if (!pastFavoritedMeal) localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    checkIfFavorited(setFavorited, id);
   }, []);
 
   const copyURLClipboard = () => {
@@ -67,29 +63,27 @@ function DetailsFoods({ location: { pathname } }) {
   };
 
   const favoriteClick = () => {
-    // if (favorited) {
-    //   setFavorited(false);
-    //   // deletar do LocalStorage
-    // } else {
-    setFavorited(true);
-    // adicionar ao LocalStorage
-    console.log('add localStorage: ', favorited);
-    setFavoritedMealInfo({
-      id: chosenMeal[0].idMeal,
-      type: '',
-      nationality: chosenMeal[0].strArea,
-      category: chosenMeal[0].strCategory,
-      alcoholicOrNot: false,
-      name: chosenMeal[0].strMeal,
-      image: chosenMeal[0].strMealThumb,
-    });
-    localStorage.setItem('favoriteRecipes', JSON.stringify(favoritedMealInfo));
-    // }
+    if (favorited) {
+      setFavorited(false);
+      const unfavoritedMeal = pastFavoritedMeal.filter((each) => (
+        each.id !== chosenMeal[0].idMeal
+      ));
+      localStorage.setItem('favoriteRecipes', JSON.stringify(unfavoritedMeal));
+    } else {
+      setFavorited(true);
+
+      const favoritedMeal = [...pastFavoritedMeal, {
+        id: chosenMeal[0].idMeal,
+        type: 'food',
+        nationality: chosenMeal[0].strArea,
+        category: chosenMeal[0].strCategory,
+        alcoholicOrNot: '',
+        name: chosenMeal[0].strMeal,
+        image: chosenMeal[0].strMealThumb,
+      }];
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favoritedMeal));
+    }
   };
-
-  // const checkIfFavorited = () => {
-
-  // };
 
   return (
     <div>
