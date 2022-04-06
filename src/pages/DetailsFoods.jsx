@@ -29,7 +29,7 @@ function DetailsFoods({ history, location: { pathname } }) {
 
   const arrayIngredientsMeasures = (data) => {
     const mealAsArray = Object.entries(data[0]);
-
+    setArray(mealAsArray);
     const ingred = mealAsArray.filter((each) => (each[0].includes('Ingredient')))
       .filter((each) => each[1] !== null && each[1].length > 2);
     setIngredients(ingred);
@@ -60,7 +60,6 @@ function DetailsFoods({ history, location: { pathname } }) {
     checkIfFavorited(setFavorited, id);
   }, []);
 
-
   const handleClick = () => {
     const ingredientList = chosenMealAsArray
       .filter((item) => (item[0].includes('strIngredient')))
@@ -71,7 +70,7 @@ function DetailsFoods({ history, location: { pathname } }) {
       [id]: ingredientList }));
     history.push(`/foods/${id}/in-progress`);
   };
- 
+
   const copyURLClipboard = () => {
     const invisibleElement = document.createElement('input');
     invisibleElement.value = window.location.href;

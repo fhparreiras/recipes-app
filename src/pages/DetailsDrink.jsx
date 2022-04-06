@@ -28,6 +28,7 @@ function DetailsDrink({ location: { pathname }, history }) {
 
   const arrayIngredientsMeasures = (data) => {
     const drinkAsArray = Object.entries(data[0]);
+    setArray(drinkAsArray);
 
     const ingred = drinkAsArray.filter((each) => (each[0].includes('Ingredient')))
       .filter((each) => each[1] !== null && each[1].length > 2);
@@ -61,7 +62,6 @@ function DetailsDrink({ location: { pathname }, history }) {
     checkIfFavorited(setFavorited, id);
   }, []);
 
-
   const handleClick = () => {
     const ingredientList = chosenDrinkAsArray
       .filter((item) => (item[0].includes('strIngredient')))
@@ -73,7 +73,7 @@ function DetailsDrink({ location: { pathname }, history }) {
       [id]: ingredientList,
     }));
     history.push(`/drinks/${id}/in-progress`);
-  }
+  };
 
   const copyURLClipboard = () => {
     const invisibleElement = document.createElement('input');
@@ -177,7 +177,7 @@ function DetailsDrink({ location: { pathname }, history }) {
             data-testid="start-recipe-btn"
             onClick={ handleClick }
           >
-            {' '} 
+            {' '}
             Start Recipe
             {' '}
           </button>

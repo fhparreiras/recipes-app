@@ -72,7 +72,6 @@ function Provider({ children }) {
   const [foods, setFoods] = useState([]);
   const [countriesList, setCountriesList] = useState([]);
 
-
   const stateValues = {
     login,
     setLogin,
