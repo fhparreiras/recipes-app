@@ -12,7 +12,7 @@ function Header({ history, title, renderSearchBar }) {
   const [searchType, setSearchType] = useState('');
   const [searchBar, setSearchBar] = useState('');
 
-  const { setDrinksList, setRecipesList } = useContext(context);
+  const { setDrinksRecipesList, setFoodRecipesList } = useContext(context);
 
   const handleClickSearch = () => {
     if (disabledSearch === true) setDisabledSearch(false);
@@ -34,7 +34,7 @@ function Header({ history, title, renderSearchBar }) {
     }
     const response = await fetch(url);
     const { meals } = await response.json();
-    setRecipesList(meals);
+    setFoodRecipesList(meals);
     if (meals === null) {
       return global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
@@ -58,7 +58,7 @@ function Header({ history, title, renderSearchBar }) {
       const response = await fetch(url);
       const { drinks } = await response.json();
       console.log(drinks);
-      setDrinksList(drinks);
+      setDrinksRecipesList(drinks);
       if (drinks === null) {
         return global.alert('Sorry, we haven\'t found any recipes for these filters.');
       }

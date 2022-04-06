@@ -8,7 +8,7 @@ import Footer from '../components/Footer';
 import { getDrinkByCategory } from '../helpers/getApi';
 
 function Drinks({ history }) {
-  const { drinksList, setDrinksList,
+  const { drinksRecipesList, setDrinksRecipesList,
     drinkCategories, setDrinkCategories } = useContext(context);
 
   useEffect(() => {
@@ -16,10 +16,10 @@ function Drinks({ history }) {
     async function fetchList() {
       const response = await fetch(url);
       const result = await response.json();
-      return setDrinksList(result.drinks);
+      return setDrinksRecipesList(result.drinks);
     }
     fetchList();
-  }, [setDrinksList]);
+  }, [setDrinksRecipesList]);
 
   useEffect(() => {
     const url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
@@ -37,13 +37,13 @@ function Drinks({ history }) {
     if (target.className === 'unset' && target.name !== 'all') {
       target.className = 'set';
       filteredDrinkList = await getDrinkByCategory(target.name);
-      setDrinksList(filteredDrinkList);
+      setDrinksRecipesList(filteredDrinkList);
     } else {
       target.className = 'unset';
       const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
       const response = await fetch(url);
       const result = await response.json();
-      return setDrinksList(result.drinks);
+      return setDrinksRecipesList(result.drinks);
     }
   };
 
@@ -83,7 +83,7 @@ function Drinks({ history }) {
         })}
       </div>
       <div className="recipe-container">
-        { drinksList !== null && drinksList.map((drink, index) => {
+        { drinksRecipesList !== null && drinksRecipesList.map((drink, index) => {
           const magicNumber = 11;
           return (
             index <= magicNumber

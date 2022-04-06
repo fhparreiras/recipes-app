@@ -13,6 +13,7 @@ function FoodsRecipeProgress({ location: { pathname } }) {
     const food = await getRecipeApi(id);
     setFoodData(Object.entries(food[0]));
   };
+
   useEffect(() => {
     gettingFoodData();
   }, []);

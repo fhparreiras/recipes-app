@@ -5,8 +5,8 @@ import context from './MyContext';
 function Provider({ children }) {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const [recipesList, setRecipesList] = useState([]);
-  const [drinksList, setDrinksList] = useState([]);
+  const [foodRecipesList, setFoodRecipesList] = useState([]);
+  const [drinksRecipesList, setDrinksRecipesList] = useState([]);
   const [foodCategories, setFoodCategories] = useState([]);
   const [drinkCategories, setDrinkCategories] = useState([]);
   const [f, setf] = useState({});
@@ -19,10 +19,10 @@ function Provider({ children }) {
     setLogin,
     password,
     setPassword,
-    recipesList,
-    setRecipesList,
-    drinksList,
-    setDrinksList,
+    foodRecipesList,
+    setFoodRecipesList,
+    drinksRecipesList,
+    setDrinksRecipesList,
     foodCategories,
     setFoodCategories,
     drinkCategories,

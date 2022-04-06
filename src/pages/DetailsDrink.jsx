@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import { require } from 'clipboard-copy';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getDrinkRecipeApi, getFoodRecommendationApi } from '../helpers/getApi';
 import shareIcon from '../images/shareIcon.svg';
-import likeIcon from '../images/whiteHeartIcon.svg';
+import likedIcon from '../images/whiteHeartIcon.svg';
+import dislikedIcon from '../images/blackHeartIcon.svg';
+import checkIfFavorited from '../extra-functions/extraFunctions';
 import '../App.css';
 
 function DetailsDrink({ location: { pathname } }) {
+  const [chosenDrink, setDrink] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
-  const [chosenDrink, setDrink] = useState([]);
   const [recommendedMeals, setRecommended] = useState([]);
+  const [copiedLinkAlert, setCopiedLinkAlert] = useState(false);
+  const [favorited, setFavorited] = useState(false);
 
   const cortar = 8;
   const arrayLength = 3;
   const url = pathname.split('/');
   const id = url[2];
+
+  const pastFavoritedDrink = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
   const arrayIngredientsMeasures = (data) => {
     const drinkAsArray = Object.entries(data[0]);
@@ -48,7 +55,43 @@ function DetailsDrink({ location: { pathname } }) {
 
   useEffect(() => {
     getChosenDrink();
+    if (!pastFavoritedDrink) localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    checkIfFavorited(setFavorited, id);
   }, []);
+
+  const copyURLClipboard = () => {
+    const invisibleElement = document.createElement('input');
+    invisibleElement.value = window.location.href;
+    document.body.appendChild(invisibleElement);
+    invisibleElement.select();
+    const copy = require('clipboard-copy');
+    copy(invisibleElement.value);
+    setCopiedLinkAlert(true);
+    document.body.removeChild(invisibleElement);
+  };
+
+  const favoriteClick = () => {
+    if (favorited) {
+      setFavorited(false);
+      const unfavoritedDrink = pastFavoritedDrink.filter((each) => (
+        each.id !== chosenDrink[0].idDrink
+      ));
+      localStorage.setItem('favoriteRecipes', JSON.stringify(unfavoritedDrink));
+    } else {
+      setFavorited(true);
+
+      const favoritedDrink = [...pastFavoritedDrink, {
+        id: chosenDrink[0].idDrink,
+        type: 'drink',
+        nationality: '',
+        category: chosenDrink[0].strCategory,
+        alcoholicOrNot: chosenDrink[0].strAlcoholic,
+        name: chosenDrink[0].strDrink,
+        image: chosenDrink[0].strDrinkThumb,
+      }];
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favoritedDrink));
+    }
+  };
 
   return (
     <div>
@@ -61,17 +104,22 @@ function DetailsDrink({ location: { pathname } }) {
             data-testid="recipe-photo"
           />
           <title data-testid="recipe-title">{chosenDrink[0].strDrink}</title>
-          <input
-            type="image"
-            data-testid="share-btn"
-            src={ shareIcon }
-            alt="share-button-icon"
-          />
+          { copiedLinkAlert ? (<div>Link copied!</div>
+          ) : (
+            <input
+              type="image"
+              data-testid="share-btn"
+              src={ shareIcon }
+              alt="share-button-icon"
+              onClick={ copyURLClipboard }
+            />
+          ) }
           <input
             type="image"
             data-testid="favorite-btn"
-            src={ likeIcon }
+            src={ favorited ? dislikedIcon : likedIcon }
             alt="like-button-icon"
+            onClick={ favoriteClick }
           />
           <p data-testid="recipe-category">{chosenDrink[0].strAlcoholic}</p>
           <table>
