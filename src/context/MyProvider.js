@@ -5,10 +5,11 @@ import context from './MyContext';
 function Provider({ children }) {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const [recipesList, setRecipesList] = useState([]);
-  const [drinksList, setDrinksList] = useState([]);
+  const [foodRecipesList, setFoodRecipesList] = useState([]);
+  const [drinksRecipesList, setDrinksRecipesList] = useState([]);
   const [foodCategories, setFoodCategories] = useState([]);
   const [drinkCategories, setDrinkCategories] = useState([]);
+
   const [savingFoodsIpAtLS, setSavingFoodsIpAtLS] = useState(() => {
     const IngredientFoods = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (IngredientFoods === null) {
@@ -67,15 +68,20 @@ function Provider({ children }) {
     }
   };
 
+  const [drinks, setDrinks] = useState([]);
+  const [foods, setFoods] = useState([]);
+  const [countriesList, setCountriesList] = useState([]);
+
+
   const stateValues = {
     login,
     setLogin,
     password,
     setPassword,
-    recipesList,
-    setRecipesList,
-    drinksList,
-    setDrinksList,
+    foodRecipesList,
+    setFoodRecipesList,
+    drinksRecipesList,
+    setDrinksRecipesList,
     foodCategories,
     setFoodCategories,
     drinkCategories,
@@ -91,6 +97,12 @@ function Provider({ children }) {
     favorited,
     setFavorited,
     updateFavorites,
+    drinks,
+    setDrinks,
+    foods,
+    setFoods,
+    countriesList,
+    setCountriesList,
   };
 
   return (

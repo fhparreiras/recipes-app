@@ -8,7 +8,7 @@ import { getFoodByCategory } from '../helpers/getApi';
 import Header from '../components/Header';
 
 function Foods({ history }) {
-  const { recipesList, setRecipesList,
+  const { foodRecipesList, setFoodRecipesList,
     foodCategories, setFoodCategories } = useContext(context);
 
   useEffect(() => {
@@ -16,10 +16,10 @@ function Foods({ history }) {
     async function fetchList() {
       const response = await fetch(url);
       const result = await response.json();
-      return setRecipesList(result.meals);
+      return setFoodRecipesList(result.meals);
     }
     fetchList();
-  }, [setRecipesList]);
+  }, [setFoodRecipesList]);
 
   useEffect(() => {
     const url = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
@@ -34,16 +34,18 @@ function Foods({ history }) {
   let filteredFoodList = foodCategories;
 
   const handleFilterBtn = async ({ target }) => {
-    if (target.className === 'unset') {
+    if (target.className === 'unset' && target.name !== 'all') {
+      const getAllByClassSet = document.querySelectorAll('.set');
+      getAllByClassSet.forEach((el) => { el.className = 'unset'; });
       target.className = 'set';
       filteredFoodList = await getFoodByCategory(target.name);
-      setRecipesList(filteredFoodList);
+      setFoodRecipesList(filteredFoodList);
     } else {
       target.className = 'unset';
       const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
       const response = await fetch(url);
       const result = await response.json();
-      return setRecipesList(result.meals);
+      return setFoodRecipesList(result.meals);
     }
   };
 
@@ -51,6 +53,15 @@ function Foods({ history }) {
     <>
       <Header title="Foods" history={ history } renderSearchBar />
       <div className="categories-container">
+        <button
+          className="unset"
+          data-testid="All-category-filter"
+          name="all"
+          onClick={ handleFilterBtn }
+          type="button"
+        >
+          All
+        </button>
         { foodCategories.map((category, index) => {
           const magicNumber = 4;
           return (
@@ -74,7 +85,7 @@ function Foods({ history }) {
         })}
       </div>
       <div className="recipe-container">
-        { recipesList !== null && recipesList.map((recipe, index) => {
+        { foodRecipesList !== null && foodRecipesList.map((recipe, index) => {
           const magicNumber = 11;
           return (
             index <= magicNumber
