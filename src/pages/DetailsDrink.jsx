@@ -9,7 +9,6 @@ import dislikedIcon from '../images/blackHeartIcon.svg';
 import checkIfFavorited from '../extra-functions/extraFunctions';
 import '../App.css';
 
-
 function DetailsDrink({ location: { pathname } }) {
   const [chosenDrink, setDrink] = useState([]);
   const [ingredients, setIngredients] = useState([]);
