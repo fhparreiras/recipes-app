@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { getFoodRecommendationApi, getRecipeApi } from '../helpers/getApi';
 import shareIcon from '../images/shareIcon.svg';
 import likeIcon from '../images/whiteHeartIcon.svg';
+import context from '../context/MyContext';
 
-function DetailsFoods({ location: { pathname } }) {
+function DetailsFoods({ history, location: { pathname } }) {
+  const { setSavingFoodsIpAtLS } = useContext(context);
+
   const [chosenMealAsArray, setArray] = useState([]);
   const [chosenMeal, setMeal] = useState([]);
   const [recommendedMeals, setRecommended] = useState([]);
@@ -30,6 +32,17 @@ function DetailsFoods({ location: { pathname } }) {
   useEffect(() => {
     getChosenMeal();
   }, []);
+
+  const handleClick = () => {
+    const ingredientList = chosenMealAsArray
+      .filter((item) => (item[0].includes('strIngredient')))
+      .filter((item) => item[1] !== '')
+      .map((item) => item[1]);
+    setSavingFoodsIpAtLS((prevState) => ({
+      ...prevState,
+      [id]: ingredientList }));
+    history.push(`/foods/${id}/in-progress`);
+  };
 
   // const { meals } = recommendedMeals;
   return (
@@ -92,9 +105,14 @@ function DetailsFoods({ location: { pathname } }) {
                 <img src={ each.strMealThumb } alt={ `${each.strMeal}` } />
                 <p>{each.strMeal}</p>
               </div>)))}
-          <Link to={ `/foods/${id}/in-progress` }>
-            <button type="button" data-testid="start-recipe-btn"> Start Recipe </button>
-          </Link>
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            onClick={ handleClick }
+          >
+            {' '}
+            Start Recipe
+          </button>
         </div>
       )}
     </div>
@@ -105,7 +123,8 @@ function DetailsFoods({ location: { pathname } }) {
 DetailsFoods.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
-  }).isRequired,
-};
+  }),
+  history: PropTypes.shape({ push: PropTypes.func }),
+}.isRequired;
 
 export default DetailsFoods;

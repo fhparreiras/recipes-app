@@ -9,7 +9,63 @@ function Provider({ children }) {
   const [drinksList, setDrinksList] = useState([]);
   const [foodCategories, setFoodCategories] = useState([]);
   const [drinkCategories, setDrinkCategories] = useState([]);
-  const [f, setf] = useState({});
+  const [savingFoodsIpAtLS, setSavingFoodsIpAtLS] = useState(() => {
+    const IngredientFoods = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (IngredientFoods === null) {
+      return [];
+    }
+    return IngredientFoods.meals;
+  });
+  const [savingDrinksIpAtLS, setSavingDrinksIpAtLS] = useState(() => {
+    const IngredientDrinks = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (IngredientDrinks === null) {
+      return [];
+    }
+    return IngredientDrinks.cocktails;
+  });
+
+  const updateInProgressRecipes = () => {
+    const toLsSaveData = {
+      cocktails: {
+        ...savingDrinksIpAtLS,
+      },
+      meals: {
+        ...savingFoodsIpAtLS,
+      },
+    };
+    const a = JSON.stringify(toLsSaveData);
+    localStorage.setItem('inProgressRecipes', a);
+  };
+
+  const [checkedIngredient, setCheckedIngredient] = useState(() => {
+    const checkedIngredientLS = JSON.parse(localStorage.getItem('inProgressChecked'));
+    if (checkedIngredientLS === null) {
+      return [];
+    }
+    return checkedIngredientLS;
+  });
+
+  const updateChecklist = () => {
+    if (checkedIngredient !== []) {
+      const b = JSON.stringify(checkedIngredient);
+      localStorage.setItem('inProgressChecked', b);
+    }
+  };
+
+  const [favorited, setFavorited] = useState(() => {
+    const favorites = JSON.parse(localStorage.getItem('Favorites'));
+    if (favorites === null) {
+      return [];
+    }
+    return favorites;
+  });
+
+  const updateFavorites = () => {
+    if (favorited !== []) {
+      const c = JSON.stringify(favorited);
+      localStorage.setItem('Favorites', c);
+    }
+  };
 
   const stateValues = {
     login,
@@ -24,8 +80,17 @@ function Provider({ children }) {
     setFoodCategories,
     drinkCategories,
     setDrinkCategories,
-    f,
-    setf,
+    savingFoodsIpAtLS,
+    setSavingFoodsIpAtLS,
+    savingDrinksIpAtLS,
+    setSavingDrinksIpAtLS,
+    checkedIngredient,
+    setCheckedIngredient,
+    updateInProgressRecipes,
+    updateChecklist,
+    favorited,
+    setFavorited,
+    updateFavorites,
   };
 
   return (

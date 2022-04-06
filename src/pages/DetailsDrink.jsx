@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { getDrinkRecipeApi, getDrinkRecommendationApi } from '../helpers/getApi';
 import shareIcon from '../images/shareIcon.svg';
 import likeIcon from '../images/whiteHeartIcon.svg';
+import context from '../context/MyContext';
 
-function DetailsDrink({ location: { pathname } }) {
+function DetailsDrink({ location: { pathname }, history }) {
+  const { setSavingDrinksIpAtLS } = useContext(context);
+
   const [chosenDrinkAsArray, setArray] = useState([]);
   const [chosenDrink, setDrink] = useState([]);
   const [recommendedDrinks, setRecommended] = useState([]);
@@ -30,6 +32,19 @@ function DetailsDrink({ location: { pathname } }) {
   useEffect(() => {
     getChosenDrink();
   }, []);
+
+  const handleClick = () => {
+    const ingredientList = chosenDrinkAsArray
+      .filter((item) => (item[0].includes('strIngredient')))
+      .filter((item) => item[1] !== '')
+      .map((item) => item[1]);
+    console.log(ingredientList);
+    setSavingDrinksIpAtLS((prevState) => ({
+      ...prevState,
+      [id]: ingredientList,
+    }));
+    history.push(`/drinks/${id}/in-progress`);
+  };
 
   return (
     <div>
@@ -79,9 +94,14 @@ function DetailsDrink({ location: { pathname } }) {
                 <p>{each.strDrink}</p>
               </div>
             )))}
-          <Link to={ `/drinks/${id}/in-progress` }>
-            <button type="button" data-testid="start-recipe-btn"> Start Recipe </button>
-          </Link>
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            onClick={ handleClick }
+          >
+            {' '}
+            Start Recipe
+          </button>
         </div>)}
     </div>
   );
@@ -90,7 +110,8 @@ function DetailsDrink({ location: { pathname } }) {
 DetailsDrink.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
-  }).isRequired,
-};
+  }),
+  history: PropTypes.shape({ push: PropTypes.func }),
+}.isRequired;
 
 export default DetailsDrink;
