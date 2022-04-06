@@ -1,13 +1,13 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 // import userEvent from '@testing-library/user-event';
-// import App from '../App';
-import Foods from '../pages/Foods';
+import App from '../App';
+// import Foods from '../pages/Foods';
 import renderWithRouter from '../renderWithRouter';
 
 describe('Testes da TELA PRINCIPAL DE RECEITAS', () => {
   test('Todos os inputs e button do HEADER devem estar presentes', () => {
-    renderWithRouter(<Foods />);
+    renderWithRouter(<App />);
 
     const text = screen.getByText('Foods');
     const profileIcon = screen.getByTestId('profile-top-btn');
