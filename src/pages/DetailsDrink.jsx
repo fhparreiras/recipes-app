@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { require } from 'clipboard-copy';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { getDrinkRecipeApi, getFoodRecommendationApi } from '../helpers/getApi';
 import shareIcon from '../images/shareIcon.svg';
 import likedIcon from '../images/whiteHeartIcon.svg';
 import dislikedIcon from '../images/blackHeartIcon.svg';
+import context from '../context/MyContext';
 import checkIfFavorited from '../extra-functions/extraFunctions';
 import '../App.css';
 
-function DetailsDrink({ location: { pathname } }) {
+function DetailsDrink({ location: { pathname }, history }) {
+  const { setSavingDrinksIpAtLS } = useContext(context);
+  const [chosenDrinkAsArray, setArray] = useState([]);
   const [chosenDrink, setDrink] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
@@ -58,6 +60,20 @@ function DetailsDrink({ location: { pathname } }) {
     if (!pastFavoritedDrink) localStorage.setItem('favoriteRecipes', JSON.stringify([]));
     checkIfFavorited(setFavorited, id);
   }, []);
+
+
+  const handleClick = () => {
+    const ingredientList = chosenDrinkAsArray
+      .filter((item) => (item[0].includes('strIngredient')))
+      .filter((item) => item[1] !== '')
+      .map((item) => item[1]);
+    console.log(ingredientList);
+    setSavingDrinksIpAtLS((prevState) => ({
+      ...prevState,
+      [id]: ingredientList,
+    }));
+    history.push(`/drinks/${id}/in-progress`);
+  }
 
   const copyURLClipboard = () => {
     const invisibleElement = document.createElement('input');
@@ -153,19 +169,18 @@ function DetailsDrink({ location: { pathname } }) {
                 <p>{each.strMeal}</p>
               </div>
             )))}
-          <Link to={ `/drinks/${id}/in-progress` }>
-            <button
-              style={ myStyle }
-              className="start-recipe-btn"
-              type="button"
-              data-testid="start-recipe-btn"
-            >
-              {' '}
-              Start Recipe
-              {' '}
 
-            </button>
-          </Link>
+          <button
+            style={ myStyle }
+            className="start-recipe-btn"
+            type="button"
+            data-testid="start-recipe-btn"
+            onClick={ handleClick }
+          >
+            {' '} 
+            Start Recipe
+            {' '}
+          </button>
         </div>)}
     </div>
   );
@@ -174,7 +189,8 @@ function DetailsDrink({ location: { pathname } }) {
 DetailsDrink.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
-  }).isRequired,
-};
+  }),
+  history: PropTypes.shape({ push: PropTypes.func }),
+}.isRequired;
 
 export default DetailsDrink;

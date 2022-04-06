@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { require } from 'clipboard-copy';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getDrinkRecommendationApi, getRecipeApi } from '../helpers/getApi';
 import shareIcon from '../images/shareIcon.svg';
 import likedIcon from '../images/whiteHeartIcon.svg';
+import context from '../context/MyContext';
 import dislikedIcon from '../images/blackHeartIcon.svg';
 import checkIfFavorited from '../extra-functions/extraFunctions';
 import '../App.css';
 
-function DetailsFoods({ location: { pathname } }) {
+function DetailsFoods({ history, location: { pathname } }) {
+  const { setSavingFoodsIpAtLS } = useContext(context);
+
+  const [chosenMealAsArray, setArray] = useState([]);
   const [chosenMeal, setMeal] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
@@ -57,6 +60,18 @@ function DetailsFoods({ location: { pathname } }) {
     checkIfFavorited(setFavorited, id);
   }, []);
 
+
+  const handleClick = () => {
+    const ingredientList = chosenMealAsArray
+      .filter((item) => (item[0].includes('strIngredient')))
+      .filter((item) => item[1] !== '')
+      .map((item) => item[1]);
+    setSavingFoodsIpAtLS((prevState) => ({
+      ...prevState,
+      [id]: ingredientList }));
+    history.push(`/foods/${id}/in-progress`);
+  };
+ 
   const copyURLClipboard = () => {
     const invisibleElement = document.createElement('input');
     invisibleElement.value = window.location.href;
@@ -163,17 +178,17 @@ function DetailsFoods({ location: { pathname } }) {
                 <img src={ each.strDrinkThumb } alt={ `${each.strDrink}` } />
                 <p>{each.strDrink}</p>
               </div>)))}
-          <Link to={ `/foods/${id}/in-progress` }>
-            <button
-              style={ myStyle }
-              type="button"
-              data-testid="start-recipe-btn"
-            >
-              {' '}
-              Start Recipe
-              {' '}
-            </button>
-          </Link>
+
+          <button
+            style={ myStyle }
+            type="button"
+            data-testid="start-recipe-btn"
+            onClick={ handleClick }
+          >
+            {' '}
+            Start Recipe
+            {' '}
+          </button>
         </div>
       )}
     </div>
@@ -184,7 +199,8 @@ function DetailsFoods({ location: { pathname } }) {
 DetailsFoods.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
-  }).isRequired,
-};
+  }),
+  history: PropTypes.shape({ push: PropTypes.func }),
+}.isRequired;
 
 export default DetailsFoods;
