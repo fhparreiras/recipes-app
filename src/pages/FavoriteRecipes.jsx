@@ -6,19 +6,19 @@ import FavoriteDrinkCard from '../components/cards/FavoriteDrinkCard';
 import context from '../context/MyContext';
 
 function FavoriteRecipes({ history }) {
-  const { recipesList, setRecipesList } = useContext(context);
+  const { foodRecipesList, setFoodRecipesList } = useContext(context);
 
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
   const removeFavorite = ({ target }) => {
     favoriteRecipes.splice(target.id, 1);
-    setRecipesList(favoriteRecipes);
+    setFoodRecipesList(favoriteRecipes);
     localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
   };
 
   useEffect(() => {
     const setInitialList = () => {
-      setRecipesList(favoriteRecipes);
+      setFoodRecipesList(favoriteRecipes);
     };
     setInitialList();
   }, []);
@@ -26,12 +26,12 @@ function FavoriteRecipes({ history }) {
   const handleFilterBtn = ({ target }) => {
     if (target.name === 'drink') {
       const filteredByDrink = favoriteRecipes.filter((recipe) => recipe.type === 'drink');
-      setRecipesList(filteredByDrink);
+      setFoodRecipesList(filteredByDrink);
     } else if (target.name === 'food') {
       const filteredByFood = favoriteRecipes.filter((recipe) => recipe.type === 'food');
-      setRecipesList(filteredByFood);
+      setFoodRecipesList(filteredByFood);
     } else {
-      setRecipesList(favoriteRecipes);
+      setFoodRecipesList(favoriteRecipes);
     }
   };
 
@@ -63,7 +63,7 @@ function FavoriteRecipes({ history }) {
         Drinks
       </button>
       <div className="favorite-recipes-container">
-        { recipesList !== null && recipesList.map((recipe, index) => (
+        { foodRecipesList !== null && foodRecipesList.map((recipe, index) => (
           recipe.type === 'food' ? (
             <FavoriteFoodCard
               history={ history }

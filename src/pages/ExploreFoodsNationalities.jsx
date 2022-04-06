@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 import FoodCard from '../components/cards/FoodCard';
 
 function ExploreFoodsNationalities() {
-  const { recipesList, setRecipesList,
+  const { foodRecipesList, setFoodRecipesList,
     countriesList, setCountriesList } = useContext(context);
 
   useEffect(() => {
@@ -24,10 +24,10 @@ function ExploreFoodsNationalities() {
     async function fetchList() {
       const response = await fetch(url);
       const result = await response.json();
-      return setRecipesList(result.meals);
+      return setFoodRecipesList(result.meals);
     }
     fetchList();
-  }, [setRecipesList]);
+  }, [setFoodRecipesList]);
 
   const selectNationality = async ({ target }) => {
     let url = '';
@@ -40,7 +40,7 @@ function ExploreFoodsNationalities() {
     console.log(url);
     const response = await fetch(url);
     const result = await response.json();
-    setRecipesList(result.meals);
+    setFoodRecipesList(result.meals);
   };
 
   return (
@@ -65,7 +65,7 @@ function ExploreFoodsNationalities() {
         ))}
       </select>
       <div className="recipe-container">
-        { recipesList !== null && recipesList.map((recipe, index) => {
+        { foodRecipesList !== null && foodRecipesList.map((recipe, index) => {
           const magicNumber = 11;
           return (
             index <= magicNumber
