@@ -79,7 +79,8 @@ function Drinks({ history, location: { prevPath } }) {
                 </button>
               )
               : (
-                <span />
+                <>
+                </>
               )
           );
         })}

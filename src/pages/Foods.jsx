@@ -104,7 +104,8 @@ function Foods({ history, location: { prevPath } }) {
                 </Link>
               )
               : (
-                <span />
+                <>
+                </>
               )
           );
         })}
