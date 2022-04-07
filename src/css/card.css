@@ -15,7 +15,7 @@
   color: white;
   display: flex;
   font-family: Arial , Helvetica , sans-serif;
-  font-size: 17px;
+  font-size: 11px;
   font-weight: 400;
   height: 28px;
   justify-content: center;
@@ -31,7 +31,7 @@
   flex-flow: row wrap;
   height: 100vh;
   justify-content: space-around;
-  margin: 40px auto 70px;
+  margin: 25px auto 70px;
   overflow-y: scroll;
   padding: 5px;
   width: 100vw;
