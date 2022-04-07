@@ -163,13 +163,18 @@ function DetailsDrink({ location: { pathname }, history }) {
 
           {(!recommendedMeals) ? (<p>Loading</p>
           ) : (
-            recommendedMeals.map((each, index) => (
-              <div key={ index } data-testid={ `${index}-recomendation-card` }>
-                <img src={ each.strMealThumb } alt={ `${each.strMeal}` } />
-                <p>{each.strMeal}</p>
-              </div>
-            )))}
-
+            <div className="recommended-container">
+              {recommendedMeals.map((each, index) => (
+                <div
+                  className="recommended-card"
+                  key={ index }
+                  data-testid={ `${index}-recomendation-card` }
+                >
+                  <img src={ each.strMealThumb } alt={ `${each.strMeal}` } />
+                  <p data-testid={ `${index}-recomendation-title` }>{each.strMeal}</p>
+                </div>
+              ))}
+            </div>)}
           <button
             style={ myStyle }
             className="start-recipe-btn"

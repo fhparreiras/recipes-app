@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import DrinkIngredientsCard from '../components/cards/DrinkIngredientsCard';
 import drinkIngredientsApi from '../helpers/drinkIngredientsApi';
 
-function ExploreDrinksIngredients() {
+function ExploreDrinksIngredients({ history }) {
   const [ingredients, setIngredients] = useState([]);
   const DOZE = 12;
 
@@ -20,10 +21,14 @@ function ExploreDrinksIngredients() {
   return (
     <div>
       <Header title="Explore Ingredients" renderSearchBar={ false } />
-      <DrinkIngredientsCard value={ firstIngredients } />
+      <DrinkIngredientsCard history={ history } value={ firstIngredients } />
       <Footer />
     </div>
   );
 }
+
+ExploreDrinksIngredients.propTypes = {
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+};
 
 export default ExploreDrinksIngredients;

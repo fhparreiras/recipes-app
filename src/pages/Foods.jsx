@@ -7,16 +7,20 @@ import Footer from '../components/Footer';
 import { getFoodByCategory } from '../helpers/getApi';
 import Header from '../components/Header';
 
-function Foods({ history }) {
+function Foods({ history, location: { prevPath } }) {
   const { foodRecipesList, setFoodRecipesList,
     foodCategories, setFoodCategories } = useContext(context);
 
   useEffect(() => {
     const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
     async function fetchList() {
-      const response = await fetch(url);
-      const result = await response.json();
-      return setFoodRecipesList(result.meals);
+      if (prevPath !== 'ingredients') {
+        const response = await fetch(url);
+        const result = await response.json();
+        console.log(prevPath);
+        return setFoodRecipesList(result.meals);
+      }
+      // return setFoodRecipesList([]);
     }
     fetchList();
   }, [setFoodRecipesList]);
@@ -113,5 +117,8 @@ function Foods({ history }) {
 }
 Foods.propTypes = {
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+  location: PropTypes.shape({
+    prevPath: PropTypes.string.isRequired,
+  }).isRequired,
 };
 export default Foods;
