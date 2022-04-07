@@ -7,16 +7,18 @@ import context from '../context/MyContext';
 import Footer from '../components/Footer';
 import { getDrinkByCategory } from '../helpers/getApi';
 
-function Drinks({ history }) {
+function Drinks({ history, location: { prevPath } }) {
   const { drinksRecipesList, setDrinksRecipesList,
     drinkCategories, setDrinkCategories } = useContext(context);
 
   useEffect(() => {
     const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
     async function fetchList() {
-      const response = await fetch(url);
-      const result = await response.json();
-      return setDrinksRecipesList(result.drinks);
+      if (prevPath !== 'ingredients') {
+        const response = await fetch(url);
+        const result = await response.json();
+        return setDrinksRecipesList(result.drinks);
+      }
     }
     fetchList();
   }, [setDrinksRecipesList]);
@@ -112,6 +114,9 @@ function Drinks({ history }) {
 
 Drinks.propTypes = {
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+  location: PropTypes.shape({
+    prevPath: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default Drinks;
