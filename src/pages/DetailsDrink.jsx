@@ -10,7 +10,7 @@ import checkIfFavorited from '../extra-functions/extraFunctions';
 import '../App.css';
 
 function DetailsDrink({ location: { pathname }, history }) {
-  const { setSavingDrinksIpAtLS } = useContext(context);
+  const { setSavingDrinksIpAtLS, setFavoritedd } = useContext(context);
   const [chosenDrinkAsArray, setArray] = useState([]);
   const [chosenDrink, setDrink] = useState([]);
   const [ingredients, setIngredients] = useState([]);
@@ -106,6 +106,7 @@ function DetailsDrink({ location: { pathname }, history }) {
         image: chosenDrink[0].strDrinkThumb,
       }];
       localStorage.setItem('favoriteRecipes', JSON.stringify(favoritedDrink));
+      setFavoritedd(favoritedDrink);
     }
   };
 

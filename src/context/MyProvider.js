@@ -53,8 +53,8 @@ function Provider({ children }) {
     }
   };
 
-  const [favorited, setFavorited] = useState(() => {
-    const favorites = JSON.parse(localStorage.getItem('Favorites'));
+  const [favoritedd, setFavoritedd] = useState(() => {
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (favorites === null) {
       return [];
     }
@@ -62,9 +62,9 @@ function Provider({ children }) {
   });
 
   const updateFavorites = () => {
-    if (favorited !== []) {
-      const c = JSON.stringify(favorited);
-      localStorage.setItem('Favorites', c);
+    if (favoritedd !== []) {
+      const c = JSON.stringify(favoritedd);
+      localStorage.setItem('favoriteRecipes', c);
     }
   };
 
@@ -93,8 +93,8 @@ function Provider({ children }) {
     setCheckedIngredient,
     updateInProgressRecipes,
     updateChecklist,
-    favorited,
-    setFavorited,
+    favoritedd,
+    setFavoritedd,
     updateFavorites,
     drinks,
     setDrinks,

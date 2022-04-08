@@ -13,8 +13,8 @@ function DrinksRecipeProgress({ location: { pathname }, history }) {
     checkedIngredient,
     updateInProgressRecipes,
     updateChecklist,
-    favorited,
-    setFavorited,
+    favoritedd,
+    setFavoritedd,
     updateFavorites,
   } = useContext(context);
   const [drinkData, setDrinkData] = useState([]);
@@ -33,7 +33,7 @@ function DrinksRecipeProgress({ location: { pathname }, history }) {
     updateInProgressRecipes();
     updateChecklist();
     updateFavorites();
-  }, [checkedIngredient, favorited]);
+  }, [checkedIngredient, favoritedd]);
 
   const copyToClipboard = () => {
     setCopyText(!copyText);
@@ -52,11 +52,19 @@ function DrinksRecipeProgress({ location: { pathname }, history }) {
 
   const favorites = () => {
     const name = drinkData.filter((item) => item[0] === 'strDrink')[0][1];
-    if (!favorited.find((item) => item === name)) { // coloca
-      setFavorited([...favorited, name]);
+    if (!favoritedd.find((item) => item.name === name)) { // coloca
+      setFavoritedd([...favoritedd, {
+        id: drinkData.filter((item) => item[0] === 'idDrink')[0][1],
+        type: 'drink',
+        nationality: '',
+        category: drinkData.filter((item) => item[0] === 'strCategory')[0][1],
+        alcoholicOrNot: drinkData.filter((item) => item[0] === 'strAlcoholic')[0][1],
+        name: drinkData.filter((item) => item[0] === 'strDrink')[0][1],
+        image: drinkData.filter((item) => item[0] === 'strDrinkThumb')[0][1],
+      }]);
     }
-    if (favorited.find((item) => item === name)) { // retira
-      setFavorited(favorited.filter((item) => item !== name));
+    if (favoritedd.find((item) => item.name === name)) { // retira
+      setFavoritedd(favoritedd.filter((item) => item.name !== name));
     }
   };
 
@@ -85,8 +93,8 @@ function DrinksRecipeProgress({ location: { pathname }, history }) {
           <input
             type="image"
             data-testid="favorite-btn"
-            src={ favorited.includes(drinkData
-              .filter((item) => item[0] === 'strDrink')[0][1])
+            src={ favoritedd.find((item) => item.name === drinkData
+              .filter((k) => k[0] === 'strDrink')[0][1])
               ? blackHeartIcon : whiteHeartIcon }
             alt="ícone do like-button"
             onClick={ favorites }
