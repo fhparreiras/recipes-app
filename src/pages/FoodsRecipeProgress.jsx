@@ -13,8 +13,8 @@ function FoodsRecipeProgress({ history, location: { pathname } }) {
     checkedIngredient,
     updateInProgressRecipes,
     updateChecklist,
-    favorited,
-    setFavorited,
+    favoritedd,
+    setFavoritedd,
     updateFavorites,
   } = useContext(context);
   const [copyText, setCopyText] = useState(false);
@@ -36,7 +36,7 @@ function FoodsRecipeProgress({ history, location: { pathname } }) {
     updateInProgressRecipes();
     updateChecklist();
     updateFavorites();
-  }, [checkedIngredient, favorited]);
+  }, [checkedIngredient, favoritedd]);
 
   const copyToClipboard = () => {
     setCopyText(!copyText);
@@ -55,11 +55,19 @@ function FoodsRecipeProgress({ history, location: { pathname } }) {
 
   const favorites = () => {
     const name = foodData.filter((item) => item[0] === 'strMeal')[0][1];
-    if (!favorited.find((item) => item === name)) { // coloca
-      setFavorited([...favorited, name]);
+    if (!favoritedd.find((item) => item.name === name)) { // coloca
+      setFavoritedd([...favoritedd, {
+        id: foodData.filter((item) => item[0] === 'idMeal')[0][1],
+        type: 'food',
+        nationality: foodData.filter((item) => item[0] === 'strArea')[0][1],
+        category: foodData.filter((item) => item[0] === 'strCategory')[0][1],
+        alcoholicOrNot: '',
+        name: foodData.filter((item) => item[0] === 'strMeal')[0][1],
+        image: foodData.filter((item) => item[0] === 'strMealThumb')[0][1],
+      }]);
     }
-    if (favorited.find((item) => item === name)) { // retira
-      setFavorited(favorited.filter((item) => item !== name));
+    if (favoritedd.find((item) => item.name === name)) { // retira
+      setFavoritedd(favoritedd.filter((item) => item.name !== name));
     }
   };
 
@@ -88,8 +96,8 @@ function FoodsRecipeProgress({ history, location: { pathname } }) {
           <input
             type="image"
             data-testid="favorite-btn"
-            src={ favorited.includes(foodData
-              .filter((item) => item[0] === 'strMeal')[0][1])
+            src={ favoritedd.find((item) => item.name === foodData
+              .filter((k) => k[0] === 'strMeal')[0][1])
               ? blackHeartIcon : whiteHeartIcon }
             alt="ícone do like-button"
             onClick={ favorites }
