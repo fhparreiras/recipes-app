@@ -1,7 +1,8 @@
 .footer {
   align-items: center;
-  background-color: rgb(238, 143, 88);
+  background-color: white;
   bottom: 0;
+  box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: space-around;
   left: 0;
@@ -12,12 +13,19 @@
 
 .header {
   align-items: center;
-  background-color: rgb(238, 143, 88);
+  background-color: white;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   display: flex;
+  font-family: Porter Sans Block , sans-serif;
   height: 55px;
   justify-content: space-between;
   margin-bottom: 15px;
   width: 100%;
+}
+
+h1 {
+  display: flex;
+  font-size: 33px;
 }
 
 .search-bar {
