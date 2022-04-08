@@ -106,39 +106,48 @@ function Header({ history, title, renderSearchBar }) {
               placeholder="Search Recipe"
               onChange={ handleSearchBar }
             />
-            <label htmlFor="ingredient">
-              <input
-                data-testid="ingredient-search-radio"
-                id="ingredient"
-                name="options"
-                onClick={ handleRadioBtn }
-                type="radio"
-                value="ingredient"
-              />
-              Ingredient
-            </label>
-            <label htmlFor="name">
-              <input
-                data-testid="name-search-radio"
-                id="name"
-                name="options"
-                onClick={ handleRadioBtn }
-                type="radio"
-                value="name"
-              />
-              Name
-            </label>
-            <label htmlFor="first-letter">
-              <input
-                data-testid="first-letter-search-radio"
-                id="first-letter"
-                name="options"
-                onClick={ handleRadioBtn }
-                type="radio"
-                value="first-letter"
-              />
-              First Letter
-            </label>
+            <div className="search-bar-labels-container">
+
+              <label htmlFor="ingredient">
+                <span>
+                  <input
+                    data-testid="ingredient-search-radio"
+                    id="ingredient"
+                    name="options"
+                    onClick={ handleRadioBtn }
+                    type="radio"
+                    value="ingredient"
+                  />
+                </span>
+                Ingredient
+              </label>
+              <label htmlFor="name">
+                <span>
+                  <input
+                    data-testid="name-search-radio"
+                    id="name"
+                    name="options"
+                    onClick={ handleRadioBtn }
+                    type="radio"
+                    value="name"
+                  />
+                </span>
+                Name
+              </label>
+              <label htmlFor="first-letter">
+                <span>
+                  <input
+                    data-testid="first-letter-search-radio"
+                    id="first-letter"
+                    name="options"
+                    onClick={ handleRadioBtn }
+                    type="radio"
+                    value="first-letter"
+                  />
+                </span>
+                First Letter
+              </label>
+            </div>
             <button
               data-testid="exec-search-btn"
               onClick={ handleSearchBtn }
