@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import '../css/explore.css';
 
 function ExploreDrinks({ history }) {
   const handleSurpriseBtn = async () => {
@@ -15,20 +16,22 @@ function ExploreDrinks({ history }) {
   return (
     <div>
       <Header title="Explore Drinks" renderSearchBar={ false } />
-      <button
-        data-testid="explore-by-ingredient"
-        onClick={ () => history.push('/explore/drinks/ingredients') }
-        type="button"
-      >
-        By Ingredient
-      </button>
-      <button
-        data-testid="explore-surprise"
-        onClick={ handleSurpriseBtn }
-        type="button"
-      >
-        Surprise me!
-      </button>
+      <span className="buttons-container">
+        <button
+          data-testid="explore-by-ingredient"
+          onClick={ () => history.push('/explore/drinks/ingredients') }
+          type="button"
+        >
+          By Ingredient
+        </button>
+        <button
+          data-testid="explore-surprise"
+          onClick={ handleSurpriseBtn }
+          type="button"
+        >
+          Surprise me!
+        </button>
+      </span>
       <Footer />
     </div>
   );
