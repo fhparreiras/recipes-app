@@ -32,5 +32,15 @@ h1 {
   width: 100%;
 }
 
-/* tela de explore foods */
-
+/* tela de explore nationalities */
+.nationalities-container {
+  border: 1px solid black;
+  border-radius: 27px;
+  box-sizing: border-box;
+  display: flex;
+  height: 47px;
+  margin: 0 auto;
+  opacity: 0.27;
+  padding: 10px;
+  width: 90vw;
+}

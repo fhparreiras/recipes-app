@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import foodIngredientsApi from '../helpers/foodIngredientsApi';
 import FoodIngrendientsCard from '../components/cards/FoodIngredientsCard';
+import '../css/explore.css';
 
 function ExploreFoodsIngredients({ history }) {
   const [ingredients, setIngredients] = useState([]);
@@ -20,7 +21,7 @@ function ExploreFoodsIngredients({ history }) {
 
   return (
     <div>
-      <Header title="Explore Ingredients" renderSearchBar={ false } />
+      <Header title="Ingredients" renderSearchBar={ false } />
       <FoodIngrendientsCard history={ history } value={ firstIngredients } />
       <Footer />
     </div>
