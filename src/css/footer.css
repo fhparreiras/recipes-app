@@ -79,3 +79,7 @@ h1 {
   background-size: contain;
 }
 
+.profile-input, .search-input {
+  position: relative;
+  z-index: 10;
+}

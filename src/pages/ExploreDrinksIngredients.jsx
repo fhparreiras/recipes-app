@@ -21,7 +21,11 @@ function ExploreDrinksIngredients({ history }) {
 
   return (
     <div>
-      <Header title="Ingredients" renderSearchBar={ false } />
+      <Header
+        title="Explore Ingredients"
+        renderSearchBar={ false }
+        style={ { fontSize: '15px' } }
+      />
       <DrinkIngredientsCard history={ history } value={ firstIngredients } />
       <Footer />
     </div>

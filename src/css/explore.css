@@ -30,6 +30,7 @@ h1 {
   margin: 0 auto;
   position: absolute;
   width: 100%;
+  z-index: 0;
 }
 
 /* tela de explore nationalities */

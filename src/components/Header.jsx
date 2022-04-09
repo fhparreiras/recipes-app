@@ -7,7 +7,7 @@ import { getFoodApi, getApiDrinks } from '../helpers/getApi';
 import context from '../context/MyContext';
 import '../css/footer.css';
 
-function Header({ history, title, renderSearchBar }) {
+function Header({ history, title, renderSearchBar, style }) {
   const [disabledSearch, setDisabledSearch] = useState(true);
   const [searchType, setSearchType] = useState('');
   const [searchBar, setSearchBar] = useState('');
@@ -75,6 +75,7 @@ function Header({ history, title, renderSearchBar }) {
       <div className="header">
         <Link to="/profile">
           <input
+            className="profile-input"
             type="image"
             data-testid="profile-top-btn"
             src={ profileIcon }
@@ -84,11 +85,13 @@ function Header({ history, title, renderSearchBar }) {
 
         <h1
           data-testid="page-title"
+          style={ style }
         >
           {title}
         </h1>
         {renderSearchBar && (
           <input
+            className="search-input"
             type="image"
             data-testid="search-top-btn"
             src={ searchIcon }
@@ -161,6 +164,7 @@ function Header({ history, title, renderSearchBar }) {
 }
 
 Header.propTypes = {
+  style: PropTypes.string,
   title: PropTypes.string,
   renderSearchBar: PropTypes.bool,
   history: PropTypes.shape({ push: PropTypes.func }),

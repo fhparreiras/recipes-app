@@ -46,7 +46,11 @@ function ExploreFoodsNationalities() {
 
   return (
     <div>
-      <Header title="Nationalities" renderSearchBar />
+      <Header
+        title="Explore Nationalities"
+        renderSearchBar
+        style={ { fontSize: '13px' } }
+      />
       <select
         data-testid="explore-by-nationality-dropdown"
         className="nationalities-container"
