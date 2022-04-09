@@ -25,8 +25,12 @@
 
 h1 {
   display: flex;
+  font-size: 22px;
   justify-content: center;
   margin: 0 auto;
   position: absolute;
   width: 100%;
 }
+
+/* tela de explore foods */
+
