@@ -8,6 +8,7 @@ import dislikedIcon from '../images/blackHeartIcon.svg';
 import context from '../context/MyContext';
 import checkIfFavorited from '../extra-functions/extraFunctions';
 import '../App.css';
+import '../css/details.css';
 
 function DetailsDrink({ location: { pathname }, history }) {
   const { setSavingDrinksIpAtLS, setFavoritedd } = useContext(context);
@@ -20,7 +21,7 @@ function DetailsDrink({ location: { pathname }, history }) {
   const [favorited, setFavorited] = useState(false);
 
   const cortar = 8;
-  const arrayLength = 3;
+  // const arrayLength = 3;
   const url = pathname.split('/');
   const id = url[2];
 
@@ -31,13 +32,13 @@ function DetailsDrink({ location: { pathname }, history }) {
     setArray(drinkAsArray);
 
     const ingred = drinkAsArray.filter((each) => (each[0].includes('Ingredient')))
-      .filter((each) => each[1] !== null && each[1].length > 2);
+      .filter((each) => each[1] !== null && each[1] !== '');
     setIngredients(ingred);
-    console.log(ingredients);
 
-    setMeasures(drinkAsArray.filter((each) => (each[0].includes('Measure')))
-      .filter((each) => each[1] !== null && each[1].length > arrayLength));
-    console.log(measures);
+    const measure = drinkAsArray.filter((each) => (each[0].includes('Measure')))
+      .filter((each) => each[1] !== null && each[1] !== '');
+    const newMeasure = [...measure.map((each) => each[1])];
+    setMeasures(newMeasure);
   };
 
   const getChosenDrink = async () => {
@@ -54,6 +55,7 @@ function DetailsDrink({ location: { pathname }, history }) {
   const myStyle = {
     position: 'fixed',
     bottom: '0',
+    left: '36%',
   };
 
   useEffect(() => {
@@ -67,7 +69,7 @@ function DetailsDrink({ location: { pathname }, history }) {
       .filter((item) => (item[0].includes('strIngredient')))
       .filter((item) => item[1] !== '')
       .map((item) => item[1]);
-    console.log(ingredientList);
+
     setSavingDrinksIpAtLS((prevState) => ({
       ...prevState,
       [id]: ingredientList,
@@ -112,57 +114,75 @@ function DetailsDrink({ location: { pathname }, history }) {
 
   return (
     <div>
-      { (!chosenDrink[0]) ? (<p>Loading</p>
+      { (!chosenDrink[0]) ? (<h3>Loading...</h3>
       ) : (
         <div>
           <img
             src={ chosenDrink[0].strDrinkThumb }
             alt="Drink"
+            className="main-image"
             data-testid="recipe-photo"
           />
-          <title data-testid="recipe-title">{chosenDrink[0].strDrink}</title>
-          { copiedLinkAlert ? (<div>Link copied!</div>
-          ) : (
-            <input
-              type="image"
-              data-testid="share-btn"
-              src={ shareIcon }
-              alt="share-button-icon"
-              onClick={ copyURLClipboard }
-            />
-          ) }
-          <input
-            type="image"
-            data-testid="favorite-btn"
-            src={ favorited ? dislikedIcon : likedIcon }
-            alt="like-button-icon"
-            onClick={ favoriteClick }
-          />
-          <p data-testid="recipe-category">{chosenDrink[0].strAlcoholic}</p>
+          <span className="title-and-icons-container">
+            <span
+              className="recipe-title"
+              data-testid="recipe-title"
+            >
+              {chosenDrink[0].strDrink}
+            </span>
+            <span className="icons-container">
+              { copiedLinkAlert ? (<div className="copied">Link copied!</div>
+              ) : (
+                <input
+                  type="image"
+                  data-testid="share-btn"
+                  src={ shareIcon }
+                  alt="share-button-icon"
+                  onClick={ copyURLClipboard }
+                />
+              ) }
+              <input
+                type="image"
+                data-testid="favorite-btn"
+                src={ favorited ? dislikedIcon : likedIcon }
+                alt="like-button-icon"
+                onClick={ favoriteClick }
+              />
+            </span>
+          </span>
+          <p
+            className="category"
+            data-testid="recipe-category"
+          >
+            {chosenDrink[0].strAlcoholic}
+          </p>
+          <h4>Ingredients</h4>
           <table>
-            <tr>
-              { ingredients.map((each, index) => (
-                <th
-                  key={ index }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                >
-                  {each[1]}
-                </th>))}
-            </tr>
-            <tr>
-              { measures.map((each, index) => (
+            { ingredients.map((each, index) => (
+              <tr key={ index }>
                 <td
-                  key={ index }
                   data-testid={ `${index}-ingredient-name-and-measure` }
                 >
+                  {'- '}
                   {each[1]}
                 </td>
-              ))}
-            </tr>
+                <td
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  { measures[index] }
+                </td>
+              </tr>
+            ))}
           </table>
-          <p data-testid="instructions">{chosenDrink[0].strInstructions}</p>
+          <h4>Instructions</h4>
+          <p
+            className="p-instructions"
+            data-testid="instructions"
+          >
+            {chosenDrink[0].strInstructions}
+          </p>
 
-          {(!recommendedMeals) ? (<p>Loading</p>
+          {(!recommendedMeals) ? (<h3>Loading...</h3>
           ) : (
             <div className="recommended-container">
               {recommendedMeals.map((each, index) => (

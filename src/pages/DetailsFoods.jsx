@@ -8,6 +8,7 @@ import context from '../context/MyContext';
 import dislikedIcon from '../images/blackHeartIcon.svg';
 import checkIfFavorited from '../extra-functions/extraFunctions';
 import '../App.css';
+import '../css/details.css';
 
 function DetailsFoods({ history, location: { pathname } }) {
   const { setSavingFoodsIpAtLS, setFavoritedd } = useContext(context);
@@ -21,7 +22,7 @@ function DetailsFoods({ history, location: { pathname } }) {
   const [favorited, setFavorited] = useState(false);
 
   const cortar = 7;
-  const arrayMaxLength = 3;
+  // const arrayMaxLength = 3;
   const url = pathname.split('/');
   const id = url[2];
 
@@ -30,12 +31,15 @@ function DetailsFoods({ history, location: { pathname } }) {
   const arrayIngredientsMeasures = (data) => {
     const mealAsArray = Object.entries(data[0]);
     setArray(mealAsArray);
+
     const ingred = mealAsArray.filter((each) => (each[0].includes('Ingredient')))
-      .filter((each) => each[1] !== null && each[1].length > 2);
+      .filter((each) => each[1] !== null && each[1] !== '');
     setIngredients(ingred);
 
-    setMeasures(mealAsArray.filter((each) => (each[0].includes('Measure')))
-      .filter((each) => each[1] !== null && each[1].length > arrayMaxLength));
+    const measure = mealAsArray.filter((each) => (each[0].includes('Measure')))
+      .filter((each) => each[1] !== null && each[1] !== '');
+    const newMeasure = [...measure.map((each) => each[1])];
+    setMeasures(newMeasure);
   };
 
   const getChosenMeal = async () => {
@@ -52,6 +56,7 @@ function DetailsFoods({ history, location: { pathname } }) {
   const myStyle = {
     position: 'fixed',
     bottom: '0',
+    left: '36%',
   };
 
   useEffect(() => {
@@ -108,68 +113,87 @@ function DetailsFoods({ history, location: { pathname } }) {
 
   return (
     <div>
-      { (!chosenMeal[0]) ? (<p>Loading</p>
+      { (!chosenMeal[0]) ? (<h3>Loading...</h3>
       ) : (
         <div>
           <img
             src={ chosenMeal[0].strMealThumb }
             alt="meal"
+            className="main-image"
             data-testid="recipe-photo"
           />
-          <title data-testid="recipe-title">{chosenMeal[0].strMeal}</title>
-          { copiedLinkAlert ? (<div>Link copied!</div>
-          ) : (
-            <input
-              type="image"
-              data-testid="share-btn"
-              src={ shareIcon }
-              alt="share-button-icon"
-              onClick={ copyURLClipboard }
-            />
-          ) }
-          <input
-            type="image"
-            data-testid="favorite-btn"
-            src={ favorited ? dislikedIcon : likedIcon }
-            alt="like-button-icon"
-            onClick={ favoriteClick }
-          />
-          <p data-testid="recipe-category">{chosenMeal[0].strCategory}</p>
+          <span className="title-and-icons-container">
+            <span
+              className="recipe-title"
+              data-testid="recipe-title"
+            >
+              {chosenMeal[0].strMeal}
+            </span>
+            <span className="icons-container">
+              { copiedLinkAlert ? (<div className="copied">Link copied!</div>
+              ) : (
+                <input
+                  type="image"
+                  data-testid="share-btn"
+                  src={ shareIcon }
+                  alt="share-button-icon"
+                  onClick={ copyURLClipboard }
+                />
+              ) }
+              <input
+                type="image"
+                data-testid="favorite-btn"
+                src={ favorited ? dislikedIcon : likedIcon }
+                alt="like-button-icon"
+                onClick={ favoriteClick }
+              />
+            </span>
+          </span>
+          <p
+            className="category"
+            data-testid="recipe-category"
+          >
+            {chosenMeal[0].strCategory}
+          </p>
+          <h4>Ingredients</h4>
           <table>
-            <tr>
-              { ingredients.map((each, index) => (
-                <th
-                  key={ index }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                >
-                  {each[1]}
-                </th>))}
-            </tr>
-            <tr>
-              { measures.map((each, index) => (
+            { ingredients.map((each, index) => (
+              <tr key={ index }>
                 <td
-                  key={ index }
                   data-testid={ `${index}-ingredient-name-and-measure` }
                 >
+                  {'- '}
                   {each[1]}
                 </td>
-              ))}
-            </tr>
+                <td
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {measures[index]}
+                </td>
+              </tr>
+            ))}
           </table>
-
-          <p data-testid="instructions">{chosenMeal[0].strInstructions}</p>
-          <video
-            controls
-            data-testid="video"
-            src={ chosenMeal[0].strYoutube }
+          <h4>Instructions</h4>
+          <p
+            className="p-instructions"
+            data-testid="instructions"
           >
-            <track
-              default
-              kind="captions"
-              srcLang="en"
-              src=""
-            />
-          </video>
+            {chosenMeal[0].strInstructions}
+          </p>
+          <div className="video-container">
+            <video
+              controls
+              data-testid="video"
+              src={ chosenMeal[0].strYoutube }
+            >
+              <track
+                default
+                kind="captions"
+                srcLang="en"
+                src=""
+              />
+            </video>
+          </div>
 
           {(!recommendedDrinks) ? (<p>Loading</p>
           ) : (
