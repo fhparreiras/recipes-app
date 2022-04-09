@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { require } from 'clipboard-copy';
+import copy from 'clipboard-copy';
 import PropTypes from 'prop-types';
 import { getDrinkRecipeApi, getFoodRecommendationApi } from '../helpers/getApi';
 import homeIcon from '../images/home.svg';
@@ -83,7 +83,7 @@ function DetailsDrink({ location: { pathname }, history }) {
     invisibleElement.value = window.location.href;
     document.body.appendChild(invisibleElement);
     invisibleElement.select();
-    const copy = require('clipboard-copy');
+    // const copy = require('clipboard-copy');
     copy(invisibleElement.value);
     setCopiedLinkAlert(true);
     document.body.removeChild(invisibleElement);
@@ -165,21 +165,23 @@ function DetailsDrink({ location: { pathname }, history }) {
           </p>
           <h4>Ingredients</h4>
           <table>
-            { ingredients.map((each, index) => (
-              <tr key={ index }>
-                <td
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                >
-                  {'- '}
-                  {each[1]}
-                </td>
-                <td
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                >
-                  { measures[index] }
-                </td>
-              </tr>
-            ))}
+            <tbody>
+              { ingredients.map((each, index) => (
+                <tr key={ index }>
+                  <td
+                    data-testid={ `${index}-ingredient-name-and-measure` }
+                  >
+                    {'- '}
+                    {each[1]}
+                  </td>
+                  <td
+                    data-testid={ `${index}-ingredient-name-and-measure` }
+                  >
+                    { measures[index] }
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
           <h4>Instructions</h4>
           <p
