@@ -116,7 +116,7 @@ function Drinks({ history, location: { prevPath } }) {
 Drinks.propTypes = {
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   location: PropTypes.shape({
-    prevPath: PropTypes.string.isRequired,
+    prevPath: PropTypes.string,
   }).isRequired,
 };
 

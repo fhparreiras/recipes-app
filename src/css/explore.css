@@ -1,0 +1,32 @@
+.buttons-container {
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+  height: 50vh;
+  justify-content: space-around;
+  margin: 30% 0;
+  width: 100vw;
+}
+
+.buttons-container button {
+  background-color: rgba(120, 0, 0);
+  border: none;
+  border-radius: 27px;
+  box-shadow: 2px 2px 2px gray;
+  color: white;
+  font-weight: 400;
+  height: 82px;
+  width: 327px;
+}
+
+.header {
+  padding: 10px;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  position: absolute;
+  width: 100%;
+}
