@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { require } from 'clipboard-copy';
 import PropTypes from 'prop-types';
 import { getDrinkRecipeApi, getFoodRecommendationApi } from '../helpers/getApi';
+import homeIcon from '../images/home.svg';
 import shareIcon from '../images/shareIcon.svg';
 import likedIcon from '../images/whiteHeartIcon.svg';
 import dislikedIcon from '../images/blackHeartIcon.svg';
@@ -131,6 +132,12 @@ function DetailsDrink({ location: { pathname }, history }) {
               {chosenDrink[0].strDrink}
             </span>
             <span className="icons-container">
+              <input
+                type="image"
+                src={ homeIcon }
+                alt="home-button-icon"
+                onClick={ () => history.push('/foods') }
+              />
               { copiedLinkAlert ? (<div className="copied">Link copied!</div>
               ) : (
                 <input

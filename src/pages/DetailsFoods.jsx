@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { require } from 'clipboard-copy';
 import PropTypes from 'prop-types';
 import { getDrinkRecommendationApi, getRecipeApi } from '../helpers/getApi';
+import homeIcon from '../images/home.svg';
 import shareIcon from '../images/shareIcon.svg';
 import likedIcon from '../images/whiteHeartIcon.svg';
 import context from '../context/MyContext';
@@ -130,6 +131,12 @@ function DetailsFoods({ history, location: { pathname } }) {
               {chosenMeal[0].strMeal}
             </span>
             <span className="icons-container">
+              <input
+                type="image"
+                src={ homeIcon }
+                alt="home-button-icon"
+                onClick={ () => history.push('/foods') }
+              />
               { copiedLinkAlert ? (<div className="copied">Link copied!</div>
               ) : (
                 <input
