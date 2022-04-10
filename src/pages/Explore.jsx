@@ -7,7 +7,11 @@ import '../css/explore.css';
 function Explore({ history }) {
   return (
     <div>
-      <Header title="Explore" renderSearchBar={ false } />
+      <Header
+        title="Explore"
+        renderSearchBar={ false }
+        style={ { fontSize: '24px' } }
+      />
       <div>
 
         <button

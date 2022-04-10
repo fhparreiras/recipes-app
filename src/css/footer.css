@@ -25,9 +25,11 @@
 }
 
 h1 {
-  align-items: center;
-  font-size: 28px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  position: absolute;
+  width: 100%;
 }
 
 .search-bar {

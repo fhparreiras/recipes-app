@@ -15,7 +15,11 @@ function ExploreDrinks({ history }) {
 
   return (
     <div>
-      <Header title="Explore Drinks" renderSearchBar={ false } />
+      <Header
+        title="Explore Drinks"
+        renderSearchBar={ false }
+        style={ { fontSize: '20px' } }
+      />
       <span className="buttons-container">
         <button
           data-testid="explore-by-ingredient"
