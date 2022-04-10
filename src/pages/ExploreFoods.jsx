@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import '../css/explore.css';
 
 function ExploreFoods({ history }) {
   const handleSurpriseBtn = async () => {
@@ -19,6 +20,7 @@ function ExploreFoods({ history }) {
         data-testid="explore-by-ingredient"
         onClick={ () => history.push('/explore/foods/ingredients') }
         type="button"
+        className="explore-foods"
       >
         By Ingredient
       </button>
@@ -26,6 +28,7 @@ function ExploreFoods({ history }) {
         data-testid="explore-by-nationality"
         onClick={ () => history.push('/explore/foods/nationalities') }
         type="button"
+        className="explore-foods"
       >
         By Nationality
       </button>
@@ -33,6 +36,7 @@ function ExploreFoods({ history }) {
         data-testid="explore-surprise"
         onClick={ handleSurpriseBtn }
         type="button"
+        className="explore-foods"
       >
         Surprise me!
       </button>
