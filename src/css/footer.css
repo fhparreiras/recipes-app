@@ -20,12 +20,14 @@
   height: 55px;
   justify-content: space-between;
   margin-bottom: 15px;
+  text-align: center;
   width: 100%;
 }
 
 h1 {
-  display: flex;
-  font-size: 33px;
+  align-items: center;
+  font-size: 28px;
+  text-align: center;
 }
 
 .search-bar {

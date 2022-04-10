@@ -16,29 +16,30 @@ function ExploreFoods({ history }) {
   return (
     <div>
       <Header title="Explore Foods" renderSearchBar={ false } />
-      <span className="buttons-container">
-        <button
-          data-testid="explore-by-ingredient"
-          onClick={ () => history.push('/explore/foods/ingredients') }
-          type="button"
-        >
-          By Ingredient
-        </button>
-        <button
-          data-testid="explore-by-nationality"
-          onClick={ () => history.push('/explore/foods/nationalities') }
-          type="button"
-        >
-          By Nationality
-        </button>
-        <button
-          data-testid="explore-surprise"
-          onClick={ handleSurpriseBtn }
-          type="button"
-        >
-          Surprise me!
-        </button>
-      </span>
+      <button
+        data-testid="explore-by-ingredient"
+        onClick={ () => history.push('/explore/foods/ingredients') }
+        type="button"
+        className="explore-foods"
+      >
+        By Ingredient
+      </button>
+      <button
+        data-testid="explore-by-nationality"
+        onClick={ () => history.push('/explore/foods/nationalities') }
+        type="button"
+        className="explore-foods"
+      >
+        By Nationality
+      </button>
+      <button
+        data-testid="explore-surprise"
+        onClick={ handleSurpriseBtn }
+        type="button"
+        className="explore-foods"
+      >
+        Surprise me!
+      </button>
       <Footer />
     </div>
   );

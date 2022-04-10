@@ -8,11 +8,13 @@ function Explore({ history }) {
   return (
     <div>
       <Header title="Explore" renderSearchBar={ false } />
-      <span className="buttons-container">
+      <div>
+
         <button
           data-testid="explore-foods"
           onClick={ () => history.push('/explore/foods') }
           type="button"
+          className="explore"
         >
           Explore Foods
         </button>
@@ -20,10 +22,11 @@ function Explore({ history }) {
           data-testid="explore-drinks"
           onClick={ () => history.push('/explore/drinks') }
           type="button"
+          className="explore"
         >
           Explore Drinks
         </button>
-      </span>
+      </div>
       <Footer />
     </div>
   );

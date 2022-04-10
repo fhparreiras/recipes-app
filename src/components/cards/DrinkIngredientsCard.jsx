@@ -26,6 +26,7 @@ function DrinkIngredientsCard({ history, value }) {
           key={ `${index}${ingredient.strIngredient1}` }
           id={ ingredient.strIngredient1 }
           onClick={ cardClickHandler }
+          className="ingredient-card"
         >
           <img
             data-testid={ `${index}-card-img` }

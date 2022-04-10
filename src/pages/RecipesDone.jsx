@@ -8,10 +8,9 @@ import context from '../context/MyContext';
 function RecipesDone({ history }) {
   const { foodRecipesList, setFoodRecipesList } = useContext(context);
 
-  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-
   useEffect(() => {
     function setInitialList() {
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
       setFoodRecipesList(doneRecipes);
     }
     setInitialList();
@@ -32,30 +31,32 @@ function RecipesDone({ history }) {
   return (
     <>
       <Header title="Done Recipes" renderSearchBar={ false } />
-      <button
-        name="all"
-        type="button"
-        data-testid="filter-by-all-btn"
-        onClick={ handleFilterBtn }
-      >
-        All
-      </button>
-      <button
-        name="food"
-        onClick={ handleFilterBtn }
-        type="button"
-        data-testid="filter-by-food-btn"
-      >
-        Food
-      </button>
-      <button
-        name="drink"
-        onClick={ handleFilterBtn }
-        type="button"
-        data-testid="filter-by-drink-btn"
-      >
-        Drinks
-      </button>
+      <div className="categories-container">
+        <button
+          name="all"
+          type="button"
+          data-testid="filter-by-all-btn"
+          onClick={ handleFilterBtn }
+        >
+          All
+        </button>
+        <button
+          name="food"
+          onClick={ handleFilterBtn }
+          type="button"
+          data-testid="filter-by-food-btn"
+        >
+          Food
+        </button>
+        <button
+          name="drink"
+          onClick={ handleFilterBtn }
+          type="button"
+          data-testid="filter-by-drink-btn"
+        >
+          Drinks
+        </button>
+      </div>
       <div className="done-recipes-container">
         { foodRecipesList !== null && foodRecipesList.map((recipe, index) => (
           recipe.type === 'food' ? (

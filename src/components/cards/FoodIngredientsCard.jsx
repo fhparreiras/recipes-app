@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import context from '../../context/MyContext';
+import '../../css/explore.css';
 
 function FoodIngrendientsCard({ history, value }) {
   const { setFoodRecipesList } = useContext(context);
