@@ -13,7 +13,7 @@ function FoodCard({ index, imgSrc, recipeName }) {
 
 FoodCard.propTypes = {
   imgSrc: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
+  index: PropTypes.string.isRequired,
   recipeName: PropTypes.string.isRequired,
 };
 

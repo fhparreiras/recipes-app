@@ -8,9 +8,10 @@ import context from '../context/MyContext';
 function RecipesDone({ history }) {
   const { foodRecipesList, setFoodRecipesList } = useContext(context);
 
+  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+
   useEffect(() => {
     function setInitialList() {
-      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
       setFoodRecipesList(doneRecipes);
     }
     setInitialList();
@@ -30,7 +31,11 @@ function RecipesDone({ history }) {
 
   return (
     <>
-      <Header title="Done Recipes" renderSearchBar={ false } />
+      <Header
+        title="Done Recipes"
+        renderSearchBar={ false }
+        style={ { fontSize: '22px' } }
+      />
       <div className="categories-container">
         <button
           name="all"

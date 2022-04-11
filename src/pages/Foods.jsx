@@ -17,10 +17,8 @@ function Foods({ history, location: { prevPath } }) {
       if (prevPath !== 'ingredients') {
         const response = await fetch(url);
         const result = await response.json();
-        console.log(prevPath);
         return setFoodRecipesList(result.meals);
       }
-      // return setFoodRecipesList([]);
     }
     fetchList();
   }, [setFoodRecipesList]);
@@ -55,7 +53,12 @@ function Foods({ history, location: { prevPath } }) {
 
   return (
     <>
-      <Header title="Foods" history={ history } renderSearchBar />
+      <Header
+        title="Foods"
+        history={ history }
+        renderSearchBar
+        style={ { fontSize: '26px' } }
+      />
       <div className="categories-container">
         <button
           className="unset"
@@ -72,18 +75,18 @@ function Foods({ history, location: { prevPath } }) {
             index <= magicNumber
               ? (
                 <button
+                  key={ index }
                   className="unset"
                   data-testid={ `${category.strCategory}-category-filter` }
                   name={ category.strCategory }
                   type="button"
-                  key={ index }
                   onClick={ handleFilterBtn }
                 >
                   { category.strCategory }
                 </button>
               )
               : (
-                <span />
+                ''
               )
           );
         })}
@@ -94,18 +97,16 @@ function Foods({ history, location: { prevPath } }) {
           return (
             index <= magicNumber
               ? (
-                <Link to={ `/foods/${recipe.idMeal}` }>
+                <Link key={ index } to={ `/foods/${recipe.idMeal}` }>
                   <FoodCard
                     imgSrc={ recipe.strMealThumb }
                     index={ index }
-                    key={ index }
                     recipeName={ recipe.strMeal }
                   />
                 </Link>
               )
               : (
-                <>
-                </>
+                ''
               )
           );
         })}
@@ -116,10 +117,15 @@ function Foods({ history, location: { prevPath } }) {
     </>
   );
 }
+
+Foods.defaultProps = {
+  location: '',
+};
+
 Foods.propTypes = {
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   location: PropTypes.shape({
-    prevPath: PropTypes.string.isRequired,
-  }).isRequired,
+    prevPath: PropTypes.string,
+  }),
 };
 export default Foods;
