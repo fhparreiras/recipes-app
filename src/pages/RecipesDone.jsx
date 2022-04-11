@@ -30,7 +30,11 @@ function RecipesDone({ history }) {
 
   return (
     <>
-      <Header title="Done Recipes" renderSearchBar={ false } />
+      <Header
+        title="Done Recipes"
+        renderSearchBar={ false }
+        style={ { fontSize: '22px' } }
+      />
       <div className="categories-container">
         <button
           name="all"
