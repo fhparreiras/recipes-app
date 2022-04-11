@@ -51,7 +51,12 @@ function Drinks({ history, location: { prevPath } }) {
 
   return (
     <>
-      <Header title="Drinks" history={ history } renderSearchBar />
+      <Header
+        title="Drinks"
+        history={ history }
+        renderSearchBar
+        style={ { fontSize: '26px' } }
+      />
       <div className="categories-container">
         <button
           className="unset"

@@ -26,7 +26,11 @@ function Profile() {
 
   return (
     <div>
-      <Header title="Profile" renderSearchBar={ false } />
+      <Header
+        title="Profile"
+        renderSearchBar={ false }
+        style={ { fontSize: '26px' } }
+      />
 
       <h2 data-testid="profile-email">{checkEmail()}</h2>
 

@@ -8,9 +8,10 @@ import context from '../context/MyContext';
 function RecipesDone({ history }) {
   const { foodRecipesList, setFoodRecipesList } = useContext(context);
 
+  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+
   useEffect(() => {
     function setInitialList() {
-      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
       setFoodRecipesList(doneRecipes);
     }
     setInitialList();

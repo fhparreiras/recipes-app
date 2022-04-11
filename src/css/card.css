@@ -87,13 +87,34 @@
 }
 
 .details-container {
+  align-items: flex-start;
   display: flex;
   flex-flow: column;
+  padding-left: 10px;
+  width: 100%;
+}
+
+.details-container h6 {
+  font-size: 10px;
+  margin: 0;
 }
 
 .details-subcontainer-1 {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  padding-right: 10px;
+  width: 100%;
+}
+
+.details-subcontainer-1 h4 {
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
+}
+
+.details-subcontainer-1 input {
+  font-size: 18px;
 }
 
 .details-subcontainer-2 {

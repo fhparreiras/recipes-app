@@ -34,10 +34,11 @@ function FoodIngrendientsCard({ history, value }) {
             src={ `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png` }
             alt={ ingredient.strDescription }
             name={ ingredient.strIngredient }
+            id={ ingredient.strIngredient }
           />
           <p
             data-testid={ `${index}-card-name` }
-            name={ ingredient.strIngredient }
+            id={ ingredient.strIngredient }
           >
             {ingredient.strIngredient}
           </p>
