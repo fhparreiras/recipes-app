@@ -77,7 +77,8 @@ table tr td:nth-of-type( 1 ) {
 }
 
 .recommended-container {
-  margin: 0 10px 40px;
+  margin: 0 auto;
+  width: 340px;
 }
 
 .video-container {

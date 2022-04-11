@@ -95,7 +95,7 @@ function Foods({ history, location: { prevPath } }) {
                 <Link key={ index } to={ `/foods/${recipe.idMeal}` }>
                   <FoodCard
                     imgSrc={ recipe.strMealThumb }
-                    index={ recipe.idMeal }
+                    index={ index }
                     recipeName={ recipe.strMeal }
                   />
                 </Link>

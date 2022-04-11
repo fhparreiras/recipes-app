@@ -77,7 +77,7 @@ function FoodsRecipeProgress({ history, location: { pathname } }) {
   };
 
   const handleFinishRecipe = () => {
-    const doneRecipe = {
+    const doneRecipe = [{
       id: foodData.filter((item) => item[0] === 'idMeal')[0][1],
       type: 'food',
       nationality: foodData.filter((item) => item[0] === 'strArea')[0][1],
@@ -88,11 +88,16 @@ function FoodsRecipeProgress({ history, location: { pathname } }) {
       doneDate: dateGenerator(),
       tags: [foodData.filter((item) => item[0] === 'strTags')[0][1],
         foodData.filter((item) => item[0] === 'strTags')[0][2]],
-    };
-    const prevStorage = [...JSON.parse(localStorage.getItem('doneRecipes'))];
-    prevStorage.push(doneRecipe);
-    console.log('prevStorage aqui: ', prevStorage);
-    localStorage.setItem('doneRecipes', JSON.stringify(...prevStorage));
+    }];
+    if (localStorage.getItem('doneRecipes') === null) {
+      localStorage.setItem('doneRecipes', JSON.stringify(doneRecipe));
+    } else {
+      const prevStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+      // prevStorage.push(doneRecipe);
+      // console.log('prevStorage aqui: ', prevStorage);
+      localStorage.setItem('doneRecipes',
+        JSON.stringify([...prevStorage, ...doneRecipe]));
+    }
     history.push('/done-recipes');
   };
 
