@@ -15,7 +15,11 @@ function ExploreFoods({ history }) {
 
   return (
     <div>
-      <Header title="Explore Foods" renderSearchBar={ false } />
+      <Header
+        title="Explore Foods"
+        renderSearchBar={ false }
+        style={ { fontSize: '20px' } }
+      />
       <button
         data-testid="explore-by-ingredient"
         onClick={ () => history.push('/explore/foods/ingredients') }
