@@ -79,8 +79,7 @@ function Drinks({ history, location: { prevPath } }) {
                 </button>
               )
               : (
-                <>
-                </>
+                ''
               )
           );
         })}
@@ -91,17 +90,16 @@ function Drinks({ history, location: { prevPath } }) {
           return (
             index <= magicNumber
               ? (
-                <Link to={ `/drinks/${drink.idDrink}` }>
+                <Link key={ index } to={ `/drinks/${drink.idDrink}` }>
                   <DrinkCard
                     imgSrc={ drink.strDrinkThumb }
                     index={ index }
-                    key={ index }
                     drinkName={ drink.strDrink }
                   />
                 </Link>
               )
               : (
-                <span />
+                ''
               )
           );
         })}
@@ -113,11 +111,15 @@ function Drinks({ history, location: { prevPath } }) {
   );
 }
 
+Drinks.defaultProps = {
+  location: '',
+};
+
 Drinks.propTypes = {
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   location: PropTypes.shape({
-    prevPath: PropTypes.string.isRequired,
-  }).isRequired,
+    prevPath: PropTypes.string,
+  }),
 };
 
 export default Drinks;
