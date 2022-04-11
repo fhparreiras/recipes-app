@@ -71,6 +71,31 @@ function FoodsRecipeProgress({ history, location: { pathname } }) {
     }
   };
 
+  const dateGenerator = () => {
+    const data = new Date();
+    return data;
+  };
+
+  const handleFinishRecipe = () => {
+    const doneRecipe = {
+      id: foodData.filter((item) => item[0] === 'idMeal')[0][1],
+      type: 'food',
+      nationality: foodData.filter((item) => item[0] === 'strArea')[0][1],
+      category: foodData.filter((item) => item[0] === 'strCategory')[0][1],
+      alcoholicOrNot: '',
+      name: foodData.filter((item) => item[0] === 'strMeal')[0][1],
+      image: foodData.filter((item) => item[0] === 'strMealThumb')[0][1],
+      doneDate: dateGenerator(),
+      tags: [foodData.filter((item) => item[0] === 'strTags')[0][1],
+        foodData.filter((item) => item[0] === 'strTags')[0][2]],
+    };
+    const prevStorage = [...JSON.parse(localStorage.getItem('doneRecipes'))];
+    prevStorage.push(doneRecipe);
+    console.log('prevStorage aqui: ', prevStorage);
+    localStorage.setItem('doneRecipes', JSON.stringify(...prevStorage));
+    history.push('/done-recipes');
+  };
+
   return (
     <div>
       <p>{ copyText && 'Link copied!' }</p>
@@ -143,7 +168,7 @@ function FoodsRecipeProgress({ history, location: { pathname } }) {
               .filter((item) => item[1] !== '')
               .map((item) => item[1])
               .every((element) => checkedIngredient.includes(element)) }
-            onClick={ () => history.push('/done-recipes') }
+            onClick={ handleFinishRecipe }
           >
             Finish Recipe
           </button>

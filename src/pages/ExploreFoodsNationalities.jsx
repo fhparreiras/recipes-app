@@ -4,6 +4,7 @@ import context from '../context/MyContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FoodCard from '../components/cards/FoodCard';
+import '../css/explore.css';
 
 function ExploreFoodsNationalities() {
   const { foodRecipesList, setFoodRecipesList,
@@ -45,7 +46,11 @@ function ExploreFoodsNationalities() {
 
   return (
     <div>
-      <Header title="Explore Nationalities" renderSearchBar />
+      <Header
+        title="Explore Nationalities"
+        renderSearchBar
+        style={ { fontSize: '13px' } }
+      />
       <select
         data-testid="explore-by-nationality-dropdown"
         className="nationalities-container"
@@ -80,7 +85,8 @@ function ExploreFoodsNationalities() {
                 </Link>
               )
               : (
-                <span />
+                <>
+                </>
               )
           );
         })}

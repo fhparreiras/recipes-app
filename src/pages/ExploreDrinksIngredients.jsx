@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import DrinkIngredientsCard from '../components/cards/DrinkIngredientsCard';
 import drinkIngredientsApi from '../helpers/drinkIngredientsApi';
+import '../css/explore.css';
 
 function ExploreDrinksIngredients({ history }) {
   const [ingredients, setIngredients] = useState([]);
@@ -20,7 +21,11 @@ function ExploreDrinksIngredients({ history }) {
 
   return (
     <div>
-      <Header title="Explore Ingredients" renderSearchBar={ false } />
+      <Header
+        title="Explore Ingredients"
+        renderSearchBar={ false }
+        style={ { fontSize: '15px' } }
+      />
       <DrinkIngredientsCard history={ history } value={ firstIngredients } />
       <Footer />
     </div>

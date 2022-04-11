@@ -37,7 +37,11 @@ function FavoriteRecipes({ history }) {
 
   return (
     <>
-      <Header title="Favorite Recipes" renderSearchBar={ false } />
+      <Header
+        title="Favorite Recipes"
+        renderSearchBar={ false }
+        style={ { fontSize: '18px' } }
+      />
       <button
         name="all"
         type="button"
